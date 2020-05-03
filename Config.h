@@ -1,4 +1,9 @@
 #pragma once
+
+#ifndef _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+	#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#endif
+
 #include <iostream>
 #include <fstream>
 #include <cstdio>
