@@ -1,6 +1,6 @@
 #include "Drawing.h"
 
-cDrawing *Draw = new cDrawing();
+cDrawing* Draw = new cDrawing();
 
 void cDrawing::Line(float x, float y, float x2, float y2, D3DCOLOR color)
 {
@@ -53,7 +53,7 @@ void cDrawing::GradientRect(float x, float y, float width, float height, D3DCOLO
 
 
 	static LPDIRECT3DVERTEXBUFFER9 pVertexObject = NULL;
-	static void *pVertexBuffer = NULL;
+	static void* pVertexBuffer = NULL;
 
 
 	directX->d3ddev->CreateVertexBuffer(sizeof(vertices), 0,
@@ -82,7 +82,7 @@ void cDrawing::Circle(int X, int Y, int radius, int numSides, D3DCOLOR color)
 		D3DXVECTOR2 Line[128];
 		float Step = D3DX_PI * 2.0 / numSides;
 		int Count = 0;
-		for (float a = 0; a < D3DX_PI*2.0; a += Step)
+		for (float a = 0; a < D3DX_PI * 2.0; a += Step)
 		{
 			float X1 = radius * cos(a) + X;
 			float Y1 = radius * sin(a) + Y;
@@ -121,8 +121,8 @@ void cDrawing::CircleFilled(float x, float y, float radius, float rotate, int ty
 
 	for (int i = 1; i < resolution + 2; i++)
 	{
-		circle[i].x = (float)(x - radius * cos(pi*((i - 1) / (resolution / 2.0f))));
-		circle[i].y = (float)(y - radius * sin(pi*((i - 1) / (resolution / 2.0f))));
+		circle[i].x = (float)(x - radius * cos(pi * ((i - 1) / (resolution / 2.0f))));
+		circle[i].y = (float)(y - radius * sin(pi * ((i - 1) / (resolution / 2.0f))));
 		circle[i].z = 0;
 		circle[i].rhw = 1;
 		circle[i].color = color;
@@ -132,8 +132,8 @@ void cDrawing::CircleFilled(float x, float y, float radius, float rotate, int ty
 	int _res = resolution + 2;
 	for (int i = 0; i < _res; i++)
 	{
-		circle[i].x = x + cos(angle)*(circle[i].x - x) - sin(angle)*(circle[i].y - y);
-		circle[i].y = y + sin(angle)*(circle[i].x - x) + cos(angle)*(circle[i].y - y);
+		circle[i].x = x + cos(angle) * (circle[i].x - x) - sin(angle) * (circle[i].y - y);
+		circle[i].y = y + sin(angle) * (circle[i].x - x) + cos(angle) * (circle[i].y - y);
 	}
 
 	directX->d3ddev->CreateVertexBuffer((resolution + 2) * sizeof(sD3DVertex), D3DUSAGE_WRITEONLY, D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &g_pVB2, NULL);
@@ -156,7 +156,7 @@ void cDrawing::CircleFilled(float x, float y, float radius, float rotate, int ty
 		g_pVB2->Release();
 }
 
-void cDrawing::String(const char * szString, float X, float Y, D3DCOLOR COLOR, bool Centered, std::string name)
+void cDrawing::String(const char* szString, float X, float Y, D3DCOLOR COLOR, bool Centered, std::string name)
 {
 
 	auto Font = directX->findFont(name);
@@ -172,7 +172,7 @@ void cDrawing::String(const char * szString, float X, float Y, D3DCOLOR COLOR, b
 
 		Position.left = ((LONG)X + 1) - (Center.right / 2);
 		Position.top = ((LONG)Y + 1);
-		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1,1,1));
+		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
 
 		Position.left = ((LONG)X - 1) - (Center.right / 2);
 		Position.top = ((LONG)Y + 1);
@@ -192,7 +192,7 @@ void cDrawing::String(const char * szString, float X, float Y, D3DCOLOR COLOR, b
 	}
 }
 
-void cDrawing::String(const wchar_t * szString, float X, float Y, D3DCOLOR COLOR, bool Centered, std::string name)
+void cDrawing::String(const wchar_t* szString, float X, float Y, D3DCOLOR COLOR, bool Centered, std::string name)
 {
 
 	auto Font = directX->findFont(name);
@@ -285,20 +285,20 @@ void cDrawing::DrawScoreBoard(int x, int y, std::vector<Team> Teams)
 
 		i % 2 == 0 ? color = D3DCOLOR_XRGB(77, 77, 77) : color = D3DCOLOR_XRGB(51, 51, 51);
 
-		FilledBox(x, y + 60*i, 70, 60, color);
+		FilledBox(x, y + 60 * i, 70, 60, color);
 		Line(x + 70, y + 60 * i, x + 70, y + 60 * (i + 1), D3DCOLOR_XRGB(255, 255, 255));
 		String(Teams.at(i).teamName.c_str(), x + 35, y + 20 + 60 * i, D3DCOLOR_XRGB(Teams.at(i).color.r, Teams.at(i).color.g, Teams.at(i).color.b), true, "RobotoS_Bold");
 		for (int j = 0; j < 4; ++j)
 		{
-			j % 2 == 0 ?  color = D3DCOLOR_XRGB(51, 51, 51): color = D3DCOLOR_XRGB(77, 77, 77);
-			FilledBox(x+71, y + (i*4*15) + 15 * j, 70*3, 15, color);
-			if (j< Teams.at(i).Players.size())
-			String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + 75, y + 2 + (i * 4 * 15) + 15 * j, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS_Bold");
+			j % 2 == 0 ? color = D3DCOLOR_XRGB(51, 51, 51) : color = D3DCOLOR_XRGB(77, 77, 77);
+			FilledBox(x + 71, y + (i * 4 * 15) + 15 * j, 70 * 3, 15, color);
+			if (j < Teams.at(i).Players.size())
+				String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + 75, y + 2 + (i * 4 * 15) + 15 * j, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS_Bold");
 		}
 		Line(x, y + 60 * i, x + 280, y + 60 * i, D3DCOLOR_XRGB(255, 255, 255));
 
 	}
-	   
+
 
 
 }
@@ -308,10 +308,10 @@ static bool once = false;
 
 void cDirectX::Render(bool  active)
 {
-	d3ddev->Clear(NULL, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0,0,0,0), 1.0f, NULL);
+	d3ddev->Clear(NULL, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, NULL);
 	d3ddev->BeginScene();
 
-	if (!once)	
+	if (!once)
 		Draw->String("Initializing Please Wait", 100, 100, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 
 	if (once)
@@ -328,12 +328,12 @@ void cDirectX::Render(bool  active)
 	d3ddev->Present(NULL, NULL, NULL, NULL);
 }
 
-void cCheat::DrawString(const char * szString, float X, float Y, Color COLOR, bool Centered, std::string name)
+void cCheat::DrawString(const char* szString, float X, float Y, Color COLOR, bool Centered, std::string name)
 {
 	Draw->String(szString, X, Y, D3DCOLOR_XRGB(COLOR.r, COLOR.g, COLOR.b), Centered, name);
 }
 
-void cCheat::DrawString(const wchar_t * szString, float X, float Y, Color COLOR, bool Centered, std::string name)
+void cCheat::DrawString(const wchar_t* szString, float X, float Y, Color COLOR, bool Centered, std::string name)
 {
 	Draw->String(szString, X, Y, D3DCOLOR_XRGB(COLOR.r, COLOR.g, COLOR.b), Centered, name);
 }

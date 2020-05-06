@@ -2,7 +2,7 @@
 #include <TlHelp32.h>
 
 
-CMemory* Mem = new CMemory(); 
+CMemory* Mem = new CMemory();
 
 CMemory::CMemory()
 {
@@ -13,22 +13,22 @@ CMemory::~CMemory()
 	CloseHandle(hProcess);
 }
 
-HANDLE CMemory::Process(const char* ProcessName) 
+HANDLE CMemory::Process(const char* ProcessName)
 {
-	HANDLE hPID = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL); 
+	HANDLE hPID = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
 	PROCESSENTRY32 ProcEntry;
 	ProcEntry.dwSize = sizeof(ProcEntry);
 
 	do
-		if (!strcmp(ProcEntry.szExeFile, ProcessName)) 
+		if (!strcmp(ProcEntry.szExeFile, ProcessName))
 		{
 			PID = ProcEntry.th32ProcessID;
-			CloseHandle(hPID); 
+			CloseHandle(hPID);
 
 			return hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, PID);
-			
+
 		}
-	while (Process32Next(hPID, &ProcEntry)); 
+	while (Process32Next(hPID, &ProcEntry));
 
 }
 

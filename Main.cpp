@@ -42,7 +42,7 @@ int clickY = 0;
 
 double clockToMilliseconds(clock_t ticks) {
 	// units/(units/time) => time (seconds) * 1000 = milliseconds
-	return (ticks / (double)CLOCKS_PER_SEC)*1000.0;
+	return (ticks / (double)CLOCKS_PER_SEC) * 1000.0;
 }
 
 clock_t deltaTime = 0;
@@ -82,7 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	RegisterClassEx(&wc);
 
-	hWnd = CreateWindowEx(WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TOOLWINDOW| WS_EX_TRANSPARENT,
+	hWnd = CreateWindowEx(WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT,
 		"WindowClass",
 		"RandomTitle",
 		WS_POPUP,
@@ -92,7 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		NULL,
 		hInstance,
 		NULL);
-	SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 255,  LWA_ALPHA);
+	SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 255, LWA_ALPHA);
 
 	MARGINS margins = { -1 };
 	DwmExtendFrameIntoClientArea(hWnd, &margins);
@@ -101,7 +101,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// set up and initialize Direct3D
 	directX->initD3D(hWnd);
-	Process->myWindow= hWnd;
+	Process->myWindow = hWnd;
 
 	g_offsets.init();
 	if (!g_offsets.load("offsets"))
@@ -155,7 +155,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		{
 			clock_t beginFrame = clock();
 			if (!directX->resetLock)
-			directX->Render(Process->isWindowActive());
+				directX->Render(Process->isWindowActive());
 			clock_t endFrame = clock();
 
 			deltaTime += endFrame - beginFrame;

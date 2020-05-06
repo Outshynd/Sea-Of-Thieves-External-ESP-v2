@@ -48,10 +48,10 @@ bool cProcess::getSize()
 	WindowRect.bottom -= border.bottom;
 
 	Size[0] = WindowRect.right - WindowRect.left;
-	Size[1] = WindowRect.bottom - WindowRect.top -32;
+	Size[1] = WindowRect.bottom - WindowRect.top - 32;
 
 	Position[0] = WindowRect.left;
-	Position[1] = WindowRect.top +32;
+	Position[1] = WindowRect.top + 32;
 
 	return true;
 }
@@ -60,7 +60,7 @@ bool cProcess::isWindowActive()
 {
 	HWND ActiveWindow = GetForegroundWindow();
 
-	if (ActiveWindow != targetWindow  && ActiveWindow != myWindow)
+	if (ActiveWindow != targetWindow && ActiveWindow != myWindow)
 		return false;
 
 	return true;

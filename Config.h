@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
-	#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #endif
 
 #include <iostream>
@@ -17,7 +17,7 @@
 struct item
 {
 	template <typename T>
-	item(T &value, const std::string& sz, std::vector<item>& items)
+	item(T& value, const std::string& sz, std::vector<item>& items)
 	{
 		this->name = sz;
 		this->value = reinterpret_cast<void*>(&value);
@@ -25,7 +25,7 @@ struct item
 
 		items.push_back(*this);
 	}
-	void*		value;
+	void* value;
 	std::string	name;
 	std::string type;
 };
@@ -38,15 +38,15 @@ private:
 	std::string m_directory = "C:/SOTESP";
 public:
 	std::vector< std::string > get_configs() const;
-	bool import_from_clipboard(const std::string &file);
-	void export_to_clipboard(const std::string &file) const;
+	bool import_from_clipboard(const std::string& file);
+	void export_to_clipboard(const std::string& file) const;
 
 	bool init();
-	bool		load(const std::string &file);
-	bool		save(const std::string &file);
+	bool		load(const std::string& file);
+	bool		save(const std::string& file);
 
-	bool		reset(const std::string &file);
-	void		remove(const std::string &file) const;
+	bool		reset(const std::string& file);
+	void		remove(const std::string& file) const;
 };
 
 class c_offsets

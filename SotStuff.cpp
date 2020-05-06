@@ -63,7 +63,7 @@ float APlayerCameraManager::GetCameraFOV()
 
 AActor APlayerController::GetActor()
 {
-	return Mem->Read<AActor>(*(uintptr_t*)( __pad0x0 + Offsets.APlayerController.Pawn ));
+	return Mem->Read<AActor>(*(uintptr_t*)(__pad0x0 + Offsets.APlayerController.Pawn));
 }
 
 
@@ -202,7 +202,7 @@ AWieldableItem UWieldedItemComponent::GetWieldedItem()
 
 AItemInfo AWieldableItem::GetItemInfo()
 {
-	return  Mem->Read < AItemInfo > (*(uintptr_t*)(__pad0x0 + Offsets.AWieldableItem.ItemInfo));
+	return  Mem->Read < AItemInfo >(*(uintptr_t*)(__pad0x0 + Offsets.AWieldableItem.ItemInfo));
 }
 
 UItemDesc AItemInfo::GetItemDesc()

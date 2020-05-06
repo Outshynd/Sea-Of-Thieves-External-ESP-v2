@@ -17,10 +17,10 @@ struct vMatrix
 		m_flMatVal[2][0] = m20;	m_flMatVal[2][1] = m21; m_flMatVal[2][2] = m22; m_flMatVal[2][3] = m23;
 	}
 
-	float *operator[](int i) { Assert((i >= 0) && (i < 3)); return m_flMatVal[i]; }
-	const float *operator[](int i) const { Assert((i >= 0) && (i < 3)); return m_flMatVal[i]; }
-	float *Base() { return &m_flMatVal[0][0]; }
-	const float *Base() const { return &m_flMatVal[0][0]; }
+	float* operator[](int i) { Assert((i >= 0) && (i < 3)); return m_flMatVal[i]; }
+	const float* operator[](int i) const { Assert((i >= 0) && (i < 3)); return m_flMatVal[i]; }
+	float* Base() { return &m_flMatVal[0][0]; }
+	const float* Base() const { return &m_flMatVal[0][0]; }
 
 	float m_flMatVal[3][4];
 };
@@ -58,11 +58,11 @@ vMatrix Matrix(Vector3 rot, Vector3 origin)
 	return matrix;
 }
 
-bool cMisc::WorldToScreen(Vector3 world , Vector2 * screen) {
+bool cMisc::WorldToScreen(Vector3 world, Vector2* screen) {
 	Vector3 Screenlocation = Vector3(0, 0, 0);
-	Vector3 Rotation = SOT->localCamera.angles;	
+	Vector3 Rotation = SOT->localCamera.angles;
 
-	vMatrix tempMatrix = Matrix(Rotation, Vector3(0, 0, 0)); 
+	vMatrix tempMatrix = Matrix(Rotation, Vector3(0, 0, 0));
 
 	Vector3 vAxisX, vAxisY, vAxisZ;
 
@@ -76,18 +76,18 @@ bool cMisc::WorldToScreen(Vector3 world , Vector2 * screen) {
 	if (vTransformed.z < 1.f)
 		vTransformed.z = 1.f;
 
-	
+
 
 	float FovAngle = SOT->localCamera.fov;
 	float ScreenCenterX = Process->Size[0] / 2.0f;
 	float ScreenCenterY = Process->Size[1] / 2.0f;
-	
+
 	auto tmpFOV = tanf(FovAngle * (float)PI / 360.f);
 
-	screen->x = ScreenCenterX + vTransformed.x * (ScreenCenterX / tmpFOV )/ vTransformed.z;
+	screen->x = ScreenCenterX + vTransformed.x * (ScreenCenterX / tmpFOV) / vTransformed.z;
 	screen->y = ScreenCenterY - vTransformed.y * (ScreenCenterX / tanf(FovAngle * (float)PI / 360.f)) / vTransformed.z;
-	
-	
+
+
 	/*
 	auto Ratio = Process->Size[0] / Process->Size[1];
 	if (Ratio < 4.0f / 3.0f)

@@ -43,7 +43,7 @@ public:
 	LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
 	D3DPRESENT_PARAMETERS d3dpp;    // create a struct to hold various device information
 	std::vector<sFont>Fonts;
-	ID3DXLine * LinePtr;
+	ID3DXLine* LinePtr;
 	bool addFont(std::string name, std::string font, int size);
 
 };

@@ -415,7 +415,7 @@ struct FName
 
 class APlayerController
 {
-public: 
+public:
 	AActor GetActor();
 	APlayerCameraManager GetCameraManager();
 	Vector3 GetPlayerAngles();
@@ -527,10 +527,10 @@ private:
 struct FIsland
 {
 	int                                       IslandNameId;
-	char __pad0x4[0x4];                                
-	byte                           IslandType; 
-	unsigned char                                      UnknownData00[0x7]; 
-	char __pad0x10[0x8];  	
+	char __pad0x4[0x4];
+	byte                           IslandType;
+	unsigned char                                      UnknownData00[0x7];
+	char __pad0x10[0x8];
 	Vector3                                    IslandBoundsCentre;
 	float                                              IslandBoundsRadius;
 	float                                              IslandTriggerRadius;

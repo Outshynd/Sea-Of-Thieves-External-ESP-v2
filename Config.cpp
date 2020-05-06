@@ -6,7 +6,7 @@ nlohmann::json json;
 
 namespace fs = std::experimental::filesystem;
 
-void assign_item(item &item) {
+void assign_item(item& item) {
 	if (json[item.name.c_str()].empty())
 		return;
 
@@ -21,7 +21,7 @@ void assign_item(item &item) {
 			reinterpret_cast<int*>(item.value)[i] = json[item.name.c_str()][std::to_string(i).c_str()].get< float >();
 }
 
-void save_item(item &item) {
+void save_item(item& item) {
 	if (item.type == "float")
 		json[item.name.c_str()] = *reinterpret_cast<float*>(item.value);
 	if (item.type == "int")
@@ -33,7 +33,7 @@ void save_item(item &item) {
 			json[item.name.c_str()][std::to_string(i).c_str()] = reinterpret_cast<int*>(item.value)[i];
 }
 
-void reset_item(item &item) {
+void reset_item(item& item) {
 	if (json[item.name.c_str()].empty())
 		return;
 
@@ -99,14 +99,14 @@ bool c_config::init() {
 	return true;
 }
 
-bool c_config::save(const std::string &file) {
+bool c_config::save(const std::string& file) {
 	try {
 		std::ofstream output_file = std::ofstream(m_directory + "/" + file);
 
 		if (!output_file.good())
 			return false;
 
-		for (auto &item : m_items)
+		for (auto& item : m_items)
 			save_item(item);
 
 		output_file << std::setw(4) << json << std::endl;
@@ -114,19 +114,19 @@ bool c_config::save(const std::string &file) {
 
 		return true;
 	}
-	catch (std::ofstream::failure &ex) {
+	catch (std::ofstream::failure& ex) {
 		_RPT1(_CRT_WARN, "Failed to save the default profile. Ignoring this warning will most likely result in future profiles not being saved correctly.\n\n%s", ex.what());
 		return false;
 	}
 }
 
-bool c_config::reset(const std::string &file) {
+bool c_config::reset(const std::string& file) {
 	std::ofstream output_file = std::ofstream(m_directory + "/" + file);
 
 	if (!output_file.good())
 		return false;
 
-	for (auto &item : m_items)
+	for (auto& item : m_items)
 		reset_item(item);
 
 	output_file << std::setw(4) << json << std::endl;
@@ -135,7 +135,7 @@ bool c_config::reset(const std::string &file) {
 	return true;
 }
 
-bool c_config::load(const std::string &file) {
+bool c_config::load(const std::string& file) {
 	std::ifstream input_file = std::ifstream(m_directory + "/" + file);
 	if (!input_file.good())
 		return false;
@@ -143,7 +143,7 @@ bool c_config::load(const std::string &file) {
 	try {
 		json << input_file;
 	}
-	catch (const std::exception &ex) {
+	catch (const std::exception& ex) {
 		UNREFERENCED_PARAMETER(ex);
 		_RPT2(_CRT_ERROR, "Failed to %s profile. Ignoring this error may prevent you from loading profiles.\n\n%s", file.c_str(), ex.what());
 
@@ -151,7 +151,7 @@ bool c_config::load(const std::string &file) {
 		return false;
 	}
 
-	for (auto &item : m_items)
+	for (auto& item : m_items)
 		assign_item(item);
 
 	input_file.close();
@@ -159,7 +159,7 @@ bool c_config::load(const std::string &file) {
 	return true;
 }
 
-void c_config::remove(const std::string &file) const {
+void c_config::remove(const std::string& file) const {
 	std::string path = m_directory + "/" + file;
 	std::remove(path.c_str());
 }
@@ -167,7 +167,7 @@ void c_config::remove(const std::string &file) const {
 std::vector< std::string > c_config::get_configs() const {
 	std::vector< std::string > output{ };
 
-	for (auto &file_path : std::experimental::filesystem::directory_iterator(m_directory)) {
+	for (auto& file_path : std::experimental::filesystem::directory_iterator(m_directory)) {
 		if (file_path.path().string().empty())
 			continue;
 
@@ -180,7 +180,7 @@ std::vector< std::string > c_config::get_configs() const {
 	return output;
 }
 
-bool c_config::import_from_clipboard(const std::string &file) {
+bool c_config::import_from_clipboard(const std::string& file) {
 	const auto get_clipboard_data = []() -> std::string {
 		OpenClipboard(nullptr);
 
@@ -215,7 +215,7 @@ bool c_config::import_from_clipboard(const std::string &file) {
 	return true;
 }
 
-void c_config::export_to_clipboard(const std::string &file) const {
+void c_config::export_to_clipboard(const std::string& file) const {
 	std::ifstream input_file = std::ifstream(m_directory + "/" + file);
 	std::string str((std::istreambuf_iterator< char >(input_file)), std::istreambuf_iterator< char >());
 

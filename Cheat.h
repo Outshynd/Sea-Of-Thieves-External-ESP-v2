@@ -142,8 +142,8 @@ public:
 	bool bAnimals, bShips, bPlayers, bTreasure;
 public:
 	void readData();
-	void DrawString(const char * szString, float X, float Y, Color COLOR, bool Centered, std::string name);
-	void DrawString(const wchar_t * szString, float X, float Y, Color COLOR, bool Centered, std::string name);
+	void DrawString(const char* szString, float X, float Y, Color COLOR, bool Centered, std::string name);
+	void DrawString(const wchar_t* szString, float X, float Y, Color COLOR, bool Centered, std::string name);
 	void DrawHealthBar(int health, float maxhealth, int x, int y, int width, int height);
 	void DrawBox(int x, int y, int width, int height, Color color);
 	void DrawLine(float X, float Y, float X2, float Y2, Color color);

@@ -29,7 +29,7 @@ void cDirectX::Reset()
 	if (d3ddev)
 	{
 		resetLock = true;
-		for (int i = 0; i < (Fonts.size()-1); ++i)
+		for (int i = 0; i < (Fonts.size() - 1); ++i)
 		{
 			auto Font = Fonts[i].Font;
 			if (Font)
@@ -70,7 +70,7 @@ bool cDirectX::addFont(std::string name, std::string font, int size)
 	temp.Name = "";
 
 	Fonts.push_back(temp);
-	
+
 	int i = Fonts.size() - 1;
 
 	while (!D3DXCreateFont(d3ddev, size, 0, FW_NORMAL, 0, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH | FF_DONTCARE, font.c_str(), &Fonts.at(i).Font))
