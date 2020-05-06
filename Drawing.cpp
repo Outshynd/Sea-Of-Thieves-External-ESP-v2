@@ -208,7 +208,7 @@ void cDrawing::String(const wchar_t* szString, float X, float Y, D3DCOLOR COLOR,
 		Position.top = ((LONG)Y + 1);
 		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
 
-		Position.left = ((LONG)X - 1) - (Center.right / 2);
+		/*Position.left = ((LONG)X - 1) - (Center.right / 2);
 		Position.top = ((LONG)Y + 1);
 		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
 
@@ -218,7 +218,7 @@ void cDrawing::String(const wchar_t* szString, float X, float Y, D3DCOLOR COLOR,
 
 		Position.left = ((LONG)X + 1) - (Center.right / 2);
 		Position.top = ((LONG)Y - 1);
-		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));*/
 
 		Position.left = (LONG)X - (Center.right / 2);
 		Position.top = (LONG)Y;
@@ -285,17 +285,17 @@ void cDrawing::DrawScoreBoard(int x, int y, std::vector<Team> Teams)
 
 		i % 2 == 0 ? color = D3DCOLOR_XRGB(77, 77, 77) : color = D3DCOLOR_XRGB(51, 51, 51);
 
-		FilledBox(x, y + 60 * i, 70, 60, color);
-		Line(x + 70, y + 60 * i, x + 70, y + 60 * (i + 1), D3DCOLOR_XRGB(255, 255, 255));
-		String(Teams.at(i).teamName.c_str(), x + 35, y + 20 + 60 * i, D3DCOLOR_XRGB(Teams.at(i).color.r, Teams.at(i).color.g, Teams.at(i).color.b), true, "RobotoS_Bold");
+		//FilledBox(x, y + 60 * i, 70, 60, color);
+		//Line(x + 70, y + 60 * i, x + 70, y + 60 * (i + 1), D3DCOLOR_XRGB(255, 255, 255));
+		String(Teams.at(i).teamName.c_str(), x + 35, y + 2 + (60 * i), D3DCOLOR_XRGB(Teams.at(i).color.r, Teams.at(i).color.g, Teams.at(i).color.b), true, "RobotoS_Bold");
 		for (int j = 0; j < 4; ++j)
 		{
 			j % 2 == 0 ? color = D3DCOLOR_XRGB(51, 51, 51) : color = D3DCOLOR_XRGB(77, 77, 77);
-			FilledBox(x + 71, y + (i * 4 * 15) + 15 * j, 70 * 3, 15, color);
+			//FilledBox(x + 71, y + (i * 4 * 15) + 15 * j, 70 * 3, 15, color);
 			if (j < Teams.at(i).Players.size())
-				String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + 75, y + 2 + (i * 4 * 15) + 15 * j, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS_Bold");
+				String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + 75, y + 2 + (i * 4 * 15) + 15 * j, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS");
 		}
-		Line(x, y + 60 * i, x + 280, y + 60 * i, D3DCOLOR_XRGB(255, 255, 255));
+		//Line(x, y + 60 * i, x + 280, y + 60 * i, D3DCOLOR_XRGB(255, 255, 255));
 
 	}
 

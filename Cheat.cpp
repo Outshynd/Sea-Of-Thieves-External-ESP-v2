@@ -1,4 +1,5 @@
 #include "Cheat.h"
+//#include "Process.h"
 #include <fstream>
 
 cCheat* Cheat = new cCheat();
@@ -103,6 +104,39 @@ void cCheat::readData()
 	SOT->localCamera.fov = CameraManager.GetCameraFOV();
 	SOT->localCamera.angles = CameraManager.GetCameraRotation();
 	SOT->localCamera.position = CameraManager.GetCameraPosition();
+
+	Vector2 compass_pos = { (float)(Process->Size[0] / 2), (float)(Process->Size[1] * 0.01f) };
+
+	float compass = CameraManager.GetCameraRotation().y;
+	compass += 90.0f;
+	
+	if (compass < 1)
+		compass += 360.0f;
+
+	char* dir = "NE";
+
+	if (compass >= 337.5 || compass < 22.5)
+		dir = "N";
+	else if (compass >= 22.5 && compass < 67.5)
+		dir = "NE";
+	else if (compass >= 67.5 && compass < 112.5)
+		dir = "E";
+	else if (compass >= 112.5 && compass < 157.5)
+		dir = "SE";
+	else if (compass >= 157.5 && compass < 202.5)
+		dir = "S";
+	else if (compass >= 202.5 && compass < 247.5)
+		dir = "SW";
+	else if (compass >= 247.5 && compass < 292.5)
+		dir = "W";
+	else if (compass >= 292.5 && compass < 337.5)
+		dir = "NW";
+
+	//DrawString(std::string(std::to_string((int)compass)).c_str(), Process->getSize[0] / 2, (float)(Process->getSize[1] * 0.1), Color{ 255, 255, 255 }, true, "RobotoM");
+	DrawString(std::to_string((int)compass).c_str(), compass_pos.x, compass_pos.y + 20, Color{ 255,255,255 }, true, "RobotoS_Bold");
+	DrawString(dir, compass_pos.x, compass_pos.y, Color{ 255, 255, 255 }, true, "RobotoL");
+
+	
 
 	auto level = world.GetLevel();
 	auto actors = level.GetActors();
@@ -724,7 +758,8 @@ void cCheat::readData()
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
 			}
 		}
-		else if (name.find("AmmoChest") != std::string::npos)
+		
+		/*else if (name.find("AmmoChest") != std::string::npos)
 		{
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
@@ -738,7 +773,7 @@ void cCheat::readData()
 				DrawString("Ammo Crate", Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
 			}
-		}
+		}*/
 
 		/*else if (name.find("Ammo") != std::string::npos)
 		{

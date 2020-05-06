@@ -86,6 +86,7 @@ void cDirectX::initFonts()
 	Fonts.clear();
 	addFont("default", "Arial", 20);
 	addFont("small", "Arial", 12);
+	addFont("RobotoL", "Roboto Medium", 24);
 	addFont("RobotoM", "Roboto Medium", 18);
 	addFont("RobotoS", "Roboto Light", 14);
 	addFont("RobotoS_Bold", "Roboto Medium", 14);

@@ -14,31 +14,33 @@ void cDrawing::Draw()
 
 
 	//String(std::string("Credits: Gummy8unny").c_str(), 10, Process->Size[1] - 20, D3DCOLOR_XRGB(0, 255, 0), false, "small");
-	String(std::string("Edited by Shynd").c_str(), 10, Process->Size[1] - 20, D3DCOLOR_XRGB(255, 255, 255), false, "Roboto");
+	String(std::string("Credits: Gummy8unny - Edited by Shynd").c_str(), 10, Process->Size[1] - 20, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS");
 
 	//String(std::to_string(directX->frames).c_str(), 100, 100, D3DCOLOR_XRGB(0, 255, 0), false, "small");
+
+	float screen_top = Process->Size[1] * 0.01f;
 
 	if (Vars.GUI)
 	{
 		if (Vars.ESP.Animals.bActive)
-			String(std::string("F2: Animals On").c_str(), 10, 10, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
+			String(std::string("F2: Animals On").c_str(), 100, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 		else
-			String(std::string("F2: Animals Off").c_str(), 10, 10, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
+			String(std::string("F2: Animals Off").c_str(), 100, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 
 		if (Vars.ESP.Player.bActive)
-			String(std::string("F3: Players On").c_str(), 210, 10, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
+			String(std::string("F3: Players On").c_str(), 250, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 		else
-			String(std::string("F3: Players Off").c_str(), 210, 10, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
+			String(std::string("F3: Players Off").c_str(), 250, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 
 		if (Vars.ESP.Ships.bActive)
-			String(std::string("F4: Ships On").c_str(), 410, 10, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
+			String(std::string("F4: Ships On").c_str(), 400, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 		else
-			String(std::string("F4: Ships Off").c_str(), 410, 10, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
+			String(std::string("F4: Ships Off").c_str(), 400, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 
 		if (Vars.ESP.Treasure.bActive)
-			String(std::string("F5: Treasure On").c_str(), 610, 10, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
+			String(std::string("F5: Treasure On").c_str(), 550, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 		else
-			String(std::string("F5: Treasure Off").c_str(), 610, 10, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
+			String(std::string("F5: Treasure Off").c_str(), 550, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 	}
 
 	//draw crosshair
@@ -75,6 +77,11 @@ void cDrawing::Draw()
 	//crossvert2.x = screenmiddle.x + (crosshair_width / 2);
 	//crossvert1.y = screenmiddle.y + crosshair_length + (crosshair_width / 2);
 
+
+	//Vector2 compass_pos = { Process->Size[0], Process->Size[1] };
+
+	//float compass = CameraManager.GetCameraRotation().y;
+	//compass += 90.0f;
 
 
 	//draw menu
