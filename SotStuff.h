@@ -569,7 +569,7 @@ public:
 	UIslandDataAsset GetIslandDataAsset();
 
 private:
-	char __pad0x0[0x510];
+	char __pad0x0[0x488];
 	uintptr_t m_pIslandDataAsset;
 	TArray<struct FIsland> IslandArray;
 

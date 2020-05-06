@@ -174,6 +174,18 @@ void cDrawing::String(const char * szString, float X, float Y, D3DCOLOR COLOR, b
 		Position.top = ((LONG)Y + 1);
 		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1,1,1));
 
+		Position.left = ((LONG)X - 1) - (Center.right / 2);
+		Position.top = ((LONG)Y + 1);
+		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+
+		Position.left = ((LONG)X - 1) - (Center.right / 2);
+		Position.top = ((LONG)Y - 1);
+		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+
+		Position.left = ((LONG)X + 1) - (Center.right / 2);
+		Position.top = ((LONG)Y - 1);
+		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+
 		Position.left = (LONG)X - (Center.right / 2);
 		Position.top = (LONG)Y;
 		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, COLOR);
@@ -194,6 +206,18 @@ void cDrawing::String(const wchar_t * szString, float X, float Y, D3DCOLOR COLOR
 
 		Position.left = ((LONG)X + 1) - (Center.right / 2);
 		Position.top = ((LONG)Y + 1);
+		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+
+		Position.left = ((LONG)X - 1) - (Center.right / 2);
+		Position.top = ((LONG)Y + 1);
+		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+
+		Position.left = ((LONG)X - 1) - (Center.right / 2);
+		Position.top = ((LONG)Y - 1);
+		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+
+		Position.left = ((LONG)X + 1) - (Center.right / 2);
+		Position.top = ((LONG)Y - 1);
 		Font->DrawTextW(0, szString, (INT)wcslen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
 
 		Position.left = (LONG)X - (Center.right / 2);
@@ -263,13 +287,13 @@ void cDrawing::DrawScoreBoard(int x, int y, std::vector<Team> Teams)
 
 		FilledBox(x, y + 60*i, 70, 60, color);
 		Line(x + 70, y + 60 * i, x + 70, y + 60 * (i + 1), D3DCOLOR_XRGB(255, 255, 255));
-		String(Teams.at(i).teamName.c_str(), x + 35, y + 20 + 60 * i, D3DCOLOR_XRGB(Teams.at(i).color.r, Teams.at(i).color.g, Teams.at(i).color.b), true, "small");
+		String(Teams.at(i).teamName.c_str(), x + 35, y + 20 + 60 * i, D3DCOLOR_XRGB(Teams.at(i).color.r, Teams.at(i).color.g, Teams.at(i).color.b), true, "RobotoS_Bold");
 		for (int j = 0; j < 4; ++j)
 		{
 			j % 2 == 0 ?  color = D3DCOLOR_XRGB(51, 51, 51): color = D3DCOLOR_XRGB(77, 77, 77);
 			FilledBox(x+71, y + (i*4*15) + 15 * j, 70*3, 15, color);
 			if (j< Teams.at(i).Players.size())
-			String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + 75, y + 2 + (i * 4 * 15) + 15 * j, D3DCOLOR_XRGB(255, 255, 255), false, "small");
+			String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + 75, y + 2 + (i * 4 * 15) + 15 * j, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS_Bold");
 		}
 		Line(x, y + 60 * i, x + 280, y + 60 * i, D3DCOLOR_XRGB(255, 255, 255));
 
@@ -288,7 +312,7 @@ void cDirectX::Render(bool  active)
 	d3ddev->BeginScene();
 
 	if (!once)	
-	Draw->String("Initializing Please Wait", 100, 100, D3DCOLOR_XRGB(0, 255, 0), false, "default");
+		Draw->String("Initializing Please Wait", 100, 100, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 
 	if (once)
 	{
@@ -298,7 +322,7 @@ void cDirectX::Render(bool  active)
 	}
 
 	if (!once)
-	once = true;
+		once = true;
 
 	d3ddev->EndScene();
 	d3ddev->Present(NULL, NULL, NULL, NULL);
