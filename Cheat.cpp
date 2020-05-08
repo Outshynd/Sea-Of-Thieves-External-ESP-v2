@@ -4,6 +4,10 @@
 
 cCheat* Cheat = new cCheat();
 
+bool isSkullFortSpawned = false;
+bool isDamnedFortSpawned = false;
+bool isFleetBattleSpanwed = false;
+
 std::string cCheat::getNameFromIDmem(int ID) {
 	try {
 		DWORD_PTR fNamePtr = Mem->Read<uintptr_t>(GNames + int(ID / 0x4000) * 0x8);
@@ -109,7 +113,7 @@ void cCheat::readData()
 
 	float compass = CameraManager.GetCameraRotation().y;
 	compass += 90.0f;
-	
+
 	if (compass < 1)
 		compass += 360.0f;
 
@@ -136,12 +140,14 @@ void cCheat::readData()
 	DrawString(std::to_string((int)compass).c_str(), compass_pos.x, compass_pos.y + 20, Color{ 255,255,255 }, true, "RobotoS_Bold");
 	DrawString(dir, compass_pos.x, compass_pos.y, Color{ 255, 255, 255 }, true, "RobotoL");
 
-	
+
 
 	auto level = world.GetLevel();
 	auto actors = level.GetActors();
 	if (!actors.IsValid())
 		return;
+
+	bool _isSkullFortSpawned = false;
 
 	for (int i = 0; i < actors.Length(); ++i)
 	{
@@ -247,6 +253,8 @@ void cCheat::readData()
 		{
 			if (!Vars.ESP.World.bFort)
 				continue;
+
+			_isSkullFortSpawned = true;
 
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
@@ -382,7 +390,7 @@ void cCheat::readData()
 					continue;
 
 				tempTeam.teamName = crews[c].GetShipType();
-				if (SOT->Ships[c].type.find("azure") != std::string::npos)
+				/*if (SOT->Ships[c].type.find("azure") != std::string::npos)
 					tempTeam.color = Color(0, 255, 255);
 				else if (SOT->Ships[c].type.find("regal") != std::string::npos)
 					tempTeam.color = Color(255, 0, 255);
@@ -393,7 +401,9 @@ void cCheat::readData()
 				else if (SOT->Ships[c].type.find("golden") != std::string::npos)
 					tempTeam.color = Color(255, 255, 0);
 				else
-					tempTeam.color = Color(255, 255, 255);
+					tempTeam.color = Color(255, 255, 255);*/
+
+				tempTeam.color = Color(255, 255, 255);
 
 				SOT->Ships[c].crewID = crews[c].GetCrewID();
 
@@ -718,6 +728,7 @@ void cCheat::readData()
 			if (!Vars.ESP.Treasure.bActive)
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 20;
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 
 			auto treasure = *reinterpret_cast<AItemProxy*>(&actors[i]);
@@ -729,7 +740,7 @@ void cCheat::readData()
 			if (booty > EBootyTypes::EBootyTypes__EBootyTypes_MAX || booty < 1)
 				skip = true;
 
-			if (name.find("Pineapple") != std::string::npos || name.find("AnyItemCrate") != std::string::npos)
+			if (name.find("Pineapple") != std::string::npos || name.find("AnyItemCrate") != std::string::npos || name.find("FotD_StrongholdKey") != std::string::npos)
 				skip = false;
 
 			if (skip)
@@ -758,7 +769,62 @@ void cCheat::readData()
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
 			}
 		}
-		
+
+		else if (name.find("BP_Storm_C") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z = 35000.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			if (distance > 6000)
+				continue;
+
+			Color color = { 255,255,255 };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Storm", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+			}
+		}
+
+		else if (name.find("BP_Mermaid_C") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 20.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			Color color = { 255,255,255 };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Mermaid", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+			}
+		}
+
+		else if (name.find("BP_FogBank_C") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			//pos.z += 20.0f;
+			pos.z = 5000.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			if (distance > 6000)
+				continue;
+
+			Color color = { 255,255,255 };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Fog", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+			}
+		}
+
 		/*else if (name.find("AmmoChest") != std::string::npos)
 		{
 			auto pos = actor.GetRootComponent().GetPosition();
@@ -795,6 +861,17 @@ void cCheat::readData()
 
 	}
 
+	if (_isSkullFortSpawned)
+	{
+		if (!isSkullFortSpawned)
+		{
+			isSkullFortSpawned = true;
 
+		}
+	}
+	else
+	{
+
+	}
 
 }

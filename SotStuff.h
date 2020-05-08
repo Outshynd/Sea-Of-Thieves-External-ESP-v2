@@ -132,10 +132,12 @@ enum EBootyTypes
 	EBootyTypes__TaleArtifact = 15,
 	EBootyTypes__CampaignBooty = 16,
 	EBootyTypes__ReapersBooty = 17,
-	EBootyTypes__RitualSkull = 18,
-	EBootyTypes__AshenBooty = 19,
-	EBootyTypes__AshenGift = 20,
-	EBootyTypes__EBootyTypes_MAX = 21
+	EBootyTypes__ReapersBounty = 18,
+	EBootyTypes__RitualSkull = 19,
+	EBootyTypes__AshenBooty = 20,
+	EBootyTypes__AshenGift = 21,
+	EBootyTypes__EmissaryFlotsam = 22,
+	EBootyTypes__EBootyTypes_MAX = 23
 };
 
 

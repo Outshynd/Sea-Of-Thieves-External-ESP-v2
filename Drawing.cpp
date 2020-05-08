@@ -174,7 +174,7 @@ void cDrawing::String(const char* szString, float X, float Y, D3DCOLOR COLOR, bo
 		Position.top = ((LONG)Y + 1);
 		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
 
-		Position.left = ((LONG)X - 1) - (Center.right / 2);
+		/*Position.left = ((LONG)X - 1) - (Center.right / 2);
 		Position.top = ((LONG)Y + 1);
 		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
 
@@ -184,7 +184,7 @@ void cDrawing::String(const char* szString, float X, float Y, D3DCOLOR COLOR, bo
 
 		Position.left = ((LONG)X + 1) - (Center.right / 2);
 		Position.top = ((LONG)Y - 1);
-		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));
+		Font->DrawTextA(0, szString, (INT)strlen(szString), &Position, DT_NOCLIP, D3DCOLOR_XRGB(1, 1, 1));*/
 
 		Position.left = (LONG)X - (Center.right / 2);
 		Position.top = (LONG)Y;
