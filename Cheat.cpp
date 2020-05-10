@@ -1,12 +1,9 @@
 #include "Cheat.h"
+#include "Menu.h"
 //#include "Process.h"
 #include <fstream>
 
 cCheat* Cheat = new cCheat();
-
-bool isSkullFortSpawned = false;
-bool isDamnedFortSpawned = false;
-bool isFleetBattleSpanwed = false;
 
 std::string cCheat::getNameFromIDmem(int ID) {
 	try {
@@ -109,7 +106,7 @@ void cCheat::readData()
 	SOT->localCamera.angles = CameraManager.GetCameraRotation();
 	SOT->localCamera.position = CameraManager.GetCameraPosition();
 
-	Vector2 compass_pos = { (float)(Process->Size[0] / 2), (float)(Process->Size[1] * 0.01f) };
+	Vector2 compass_pos = { (float)(Process->Size[0] / 2), (float)(Process->Size[1] * (Menu->largeFont == false ? 0.015f : 0.03f)) };
 
 	float compass = CameraManager.GetCameraRotation().y;
 	compass += 90.0f;
@@ -137,7 +134,7 @@ void cCheat::readData()
 		dir = "NW";
 
 	//DrawString(std::string(std::to_string((int)compass)).c_str(), Process->getSize[0] / 2, (float)(Process->getSize[1] * 0.1), Color{ 255, 255, 255 }, true, "RobotoM");
-	DrawString(std::to_string((int)compass).c_str(), compass_pos.x, compass_pos.y + 20, Color{ 255,255,255 }, true, "RobotoS_Bold");
+	DrawString(std::to_string((int)compass).c_str(), compass_pos.x, compass_pos.y + (Menu->largeFont == false ? 20 : 40), Color{ 255,255,255 }, true, "RobotoS_Bold");
 	DrawString(dir, compass_pos.x, compass_pos.y, Color{ 255, 255, 255 }, true, "RobotoL");
 
 
@@ -146,8 +143,6 @@ void cCheat::readData()
 	auto actors = level.GetActors();
 	if (!actors.IsValid())
 		return;
-
-	bool _isSkullFortSpawned = false;
 
 	for (int i = 0; i < actors.Length(); ++i)
 	{
@@ -185,12 +180,12 @@ void cCheat::readData()
 
 					DrawBox(ScreenTop.x - wi / 2, ScreenTop.y, wi, hi, boxColor);
 					DrawString("Skeleton", ScreenTop.x, ScreenTop.y - 14, Color{ 255,255,255 }, true, "RobotoS_Bold");
-					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), ScreenTop.x, ScreenTop.y - 26, Color{ 255,255,255 }, true, "RobotoS");
+					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), ScreenTop.x, ScreenTop.y - (Menu->largeFont == false ? 26 : 52), Color{ 255,255,255 }, true, "RobotoS");
 					if (Vars.ESP.Skeleton.bWeapon)
 					{
 						auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 
-						if (ItemName.length() < 32)
+						if (ItemName.length() >= 4 && ItemName.length() < 32)
 							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS_Bold");
 					}
 
@@ -201,17 +196,34 @@ void cCheat::readData()
 		else if (name.find("IslandService") != std::string::npos)
 		{
 			//disable islands for now
-			continue;
+			//continue;
 
 			if (!Vars.ESP.World.bIslands)
 				continue;
 
-
 			auto IslandService = *reinterpret_cast<AIslandService*>(&actors[i]);
+			//auto IslandDataAsset = IslandService.GetIslandDataAsset();
+			//auto IslandDataAssetEntries = IslandDataAsset.GetIslandDataAssetEntry();
+
+			//for (int i = 0; i < IslandDataAssetEntries.Length(); ++i)
+			//{
+			//	auto Entry = IslandDataAssetEntries[i];
+			//	auto __name = Entry.GetName();
+			//	if (__name.find(L"Crook") != std::wstring::npos)
+			//	{
+			//		
+			//		//DrawString(std::string(__name.c_str(), Screen.x, Screen.y, color, true, "RobotoM");
+			//		DrawString(__name.c_str(), 0, 0, Color{ 255, 255, 255 }, true, "RobotoL");
+			//		break;
+			//	}
+			//}
+			
 
 			auto Islands = IslandService.GetIslandArray();
 			if (!Islands.IsValid())
 				continue;
+
+			continue;
 
 			for (int p = 0; p < Islands.Length(); ++p)
 			{
@@ -220,7 +232,7 @@ void cCheat::readData()
 				if (Island.IslandType == 0)
 					continue;
 
-				//auto _name = getNameFromIDmap(Island.IslandNameId).c_str();
+				
 
 				Color color = { Vars.ESP.World.colorWorld[0],Vars.ESP.World.colorWorld[1],Vars.ESP.World.colorWorld[2],Vars.ESP.World.colorWorld[3] };
 
@@ -245,7 +257,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Fleet Battle", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -253,8 +265,6 @@ void cCheat::readData()
 		{
 			if (!Vars.ESP.World.bFort)
 				continue;
-
-			_isSkullFortSpawned = true;
 
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
@@ -266,7 +276,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Skull Fort", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 
 		}
@@ -287,7 +297,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Fort of the Damned", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 
 		}
@@ -339,7 +349,7 @@ void cCheat::readData()
 						if (Misc->WorldToScreen(Chest, &Screen))
 						{
 							DrawString("Reapers Chest", Screen.x, Screen.y, color, true, "RobotoM");
-							DrawString(std::string(std::to_string(dist) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+							DrawString(std::string(std::to_string(dist) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 						}
 					}
 				}
@@ -365,7 +375,7 @@ void cCheat::readData()
 				if (Misc->WorldToScreen(worldPin, &Screen))
 				{
 					DrawString("Map Pin", Screen.x, Screen.y, color, true, "RobotoM");
-					DrawString(std::string(std::to_string((int)(SOT->localPlayer.position.DistTo(worldPin) / 100.f)) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+					DrawString(std::string(std::to_string((int)(SOT->localPlayer.position.DistTo(worldPin) / 100.f)) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 				}
 
 			}
@@ -478,11 +488,11 @@ void cCheat::readData()
 					if (Vars.ESP.Player.bName)
 					{
 						DrawString(pirateName.c_str(), ScreenTop.x, ScreenTop.y - 14, Color{ 255,255,255 }, true, "RobotoS_Bold");
-						DrawString(std::string(std::to_string((int)distance) + "m").c_str(), ScreenTop.x, ScreenTop.y - 26, Color{ 255,255,255 }, true, "RobotoS");
+						DrawString(std::string(std::to_string((int)distance) + "m").c_str(), ScreenTop.x, ScreenTop.y - (Menu->largeFont == false ? 26 : 52), Color{ 255,255,255 }, true, "RobotoS");
 					}
 					if (Vars.ESP.Player.bWeapon)
 					{
-						if (ItemName.length() < 32)
+						if (ItemName.length() >= 4 && ItemName.length() < 32)
 							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS_Bold");
 					}
 					if (Vars.ESP.Player.bHealth)
@@ -531,7 +541,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 1500), &Screen))
 			{
 				DrawString("Sloop", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -559,7 +569,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 1750), &Screen))
 			{
 				DrawString("Brigantine", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -588,7 +598,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 2000), &Screen))
 			{
 				DrawString("Galleon", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -613,7 +623,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 1500), &Screen))
 			{
 				DrawString("Skeleton Sloop", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 		else if (name.find("BP_AILargeShipTemplate") != std::string::npos || name.find("BP_AILargeShipNetProxy") != std::string::npos)
@@ -637,7 +647,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 2000), &Screen))
 			{
 				DrawString("Skeleton Galleon", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -658,7 +668,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, 1000), &Screen))
 			{
 				DrawString("Shipwreck", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -673,17 +683,17 @@ void cCheat::readData()
 				if (name.find("Ruby") != std::string::npos)
 				{
 					DrawString("Ruby Statue", Screen.x, Screen.y, Color{ 255,0,0 }, true, "RobotoM");
-					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, Color{ 255,0,0 }, true, "RobotoS");
+					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), Color{ 255,0,0 }, true, "RobotoS");
 				}
 				else if (name.find("Emerald") != std::string::npos)
 				{
 					DrawString("Emerald Statue", Screen.x, Screen.y, Color{ 255,0,0 }, true, "RobotoM");
-					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, Color{ 255,0,0 }, true, "RobotoS");
+					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), Color{ 255,0,0 }, true, "RobotoS");
 				}
 				else if (name.find("Sapphire") != std::string::npos)
 				{
 					DrawString("Sapphire Statue", Screen.x, Screen.y, Color{ 255,0,0 }, true, "RobotoM");
-					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, Color{ 255,0,0 }, true, "RobotoS");
+					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), Color{ 255,0,0 }, true, "RobotoS");
 				}
 			}
 		}
@@ -718,7 +728,7 @@ void cCheat::readData()
 			{
 				//DrawString(std::wstring(Fauna.GetName() + L" [ " + std::to_wstring((int)distance) + L"m ] ").c_str(), Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString(Fauna.GetName().c_str(), Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 
 		}
@@ -740,7 +750,7 @@ void cCheat::readData()
 			if (booty > EBootyTypes::EBootyTypes__EBootyTypes_MAX || booty < 1)
 				skip = true;
 
-			if (name.find("Pineapple") != std::string::npos || name.find("AnyItemCrate") != std::string::npos || name.find("FotD_StrongholdKey") != std::string::npos)
+			if (name.find("Pineapple") != std::string::npos || name.find("AnyItemCrate") != std::string::npos || name.find("StrongholdKey") != std::string::npos)
 				skip = false;
 
 			if (skip)
@@ -766,7 +776,7 @@ void cCheat::readData()
 			{
 				//DrawString(std::wstring(treasure.GetBootyItemInfo().GetItemDesc().GetName() + L" [ " + std::to_wstring((int)distance) + L"m ] ").c_str(), Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString(treasure.GetBootyItemInfo().GetItemDesc().GetName().c_str(), Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -785,7 +795,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Storm", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -801,7 +811,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Mermaid", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -821,7 +831,7 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Fog", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
 
@@ -837,7 +847,7 @@ void cCheat::readData()
 			{
 				//DrawString(std::wstring(L"Ammo Crate [ " + std::to_wstring((int)distance) + L"m ] ").c_str(), Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString("Ammo Crate", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + 18, color, true, "RobotoS");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}*/
 
@@ -858,19 +868,6 @@ void cCheat::readData()
 				DrawString(std::wstring(treasure.GetBootyItemInfo().GetItemDesc().GetName() + L" [ " + std::to_wstring((int)distance) + L"m ] ").c_str(), Screen.x, Screen.y, color, true, "RobotoM");
 		}*/
 
-
-	}
-
-	if (_isSkullFortSpawned)
-	{
-		if (!isSkullFortSpawned)
-		{
-			isSkullFortSpawned = true;
-
-		}
-	}
-	else
-	{
 
 	}
 

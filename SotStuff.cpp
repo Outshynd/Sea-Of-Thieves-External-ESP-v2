@@ -227,7 +227,7 @@ TArray<class FWorldMapShipLocation> AMapTable::GetTrackedShips()
 
 TArray<struct Vector3> AMapTable::GetTrackedBootyItemLocations()
 {
-	return *(TArray<struct Vector3>*)(__pad0x0 + 0x0500);
+	return *(TArray<struct Vector3>*)(__pad0x0 + 0x0508);
 }
 
 TArray<struct FIsland> AIslandService::GetIslandArray()
@@ -267,5 +267,5 @@ int UIslandDataAssetEntry::GetNameID()
 
 std::wstring UIslandDataAssetEntry::GetName()
 {
-	return Mem->Read<textx>(Mem->Read<uintptr_t>(this->IslandName)).word;
+	return Mem->Read<textx>(Mem->Read<uintptr_t>(this->IslandName + 0xB0)).word;
 }

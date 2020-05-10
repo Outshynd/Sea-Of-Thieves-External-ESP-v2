@@ -287,13 +287,13 @@ void cDrawing::DrawScoreBoard(int x, int y, std::vector<Team> Teams)
 
 		//FilledBox(x, y + 60 * i, 70, 60, color);
 		//Line(x + 70, y + 60 * i, x + 70, y + 60 * (i + 1), D3DCOLOR_XRGB(255, 255, 255));
-		String(Teams.at(i).teamName.c_str(), x + 35, y + 2 + (60 * i), D3DCOLOR_XRGB(Teams.at(i).color.r, Teams.at(i).color.g, Teams.at(i).color.b), true, "RobotoS_Bold");
+		String(Teams.at(i).teamName.c_str(), x + 35, y + 2 + ((Menu->largeFont == false ? 60 : 120) * i), D3DCOLOR_XRGB(Teams.at(i).color.r, Teams.at(i).color.g, Teams.at(i).color.b), true, "RobotoS_Bold");
 		for (int j = 0; j < 4; ++j)
 		{
 			j % 2 == 0 ? color = D3DCOLOR_XRGB(51, 51, 51) : color = D3DCOLOR_XRGB(77, 77, 77);
 			//FilledBox(x + 71, y + (i * 4 * 15) + 15 * j, 70 * 3, 15, color);
 			if (j < Teams.at(i).Players.size())
-				String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + 75, y + 2 + (i * 4 * 15) + 15 * j, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS");
+				String(Teams.at(i).Players.at(j).PlayerName.c_str(), x + (Menu->largeFont == false ? 75 : 150), y + 2 + (i * 4 * (Menu->largeFont == false ? 15 : 30)) + (Menu->largeFont == false ? 15 : 30) * j, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS");
 		}
 		//Line(x, y + 60 * i, x + 280, y + 60 * i, D3DCOLOR_XRGB(255, 255, 255));
 

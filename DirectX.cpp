@@ -83,13 +83,18 @@ bool cDirectX::addFont(std::string name, std::string font, int size)
 
 void cDirectX::initFonts()
 {
+	Menu->largeFont = false;
+
+	if (Process->Size[0] > 3000)
+		Menu->largeFont = true;
+
 	Fonts.clear();
-	addFont("default", "Arial", 20);
-	addFont("small", "Arial", 12);
-	addFont("RobotoL", "Roboto Medium", 24);
-	addFont("RobotoM", "Roboto Medium", 18);
-	addFont("RobotoS", "Roboto Light", 14);
-	addFont("RobotoS_Bold", "Roboto Medium", 14);
+	addFont("default", "Arial", Menu->largeFont == false ? 20 : 40);
+	addFont("small", "Arial", Menu->largeFont == false ? 12 : 24);
+	addFont("RobotoL", "Roboto Medium", Menu->largeFont == false ? 24 : 48);
+	addFont("RobotoM", "Roboto Medium", Menu->largeFont == false ? 18 : 36);
+	addFont("RobotoS", "Roboto Light", Menu->largeFont == false ? 14 : 28);
+	addFont("RobotoS_Bold", "Roboto Medium", Menu->largeFont == false ? 14: 28);
 }
 
 ID3DXFont* cDirectX::findFont(std::string name)

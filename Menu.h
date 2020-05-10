@@ -7,6 +7,7 @@ class cMenu
 public:
 	bool menuOpen = true;
 	Vector2 curPos;
+	bool largeFont = false;
 
 public:
 	void DrawMenu();

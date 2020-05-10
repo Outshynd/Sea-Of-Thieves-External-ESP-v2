@@ -14,7 +14,7 @@ void cDrawing::Draw()
 
 
 	//String(std::string("Credits: Gummy8unny").c_str(), 10, Process->Size[1] - 20, D3DCOLOR_XRGB(0, 255, 0), false, "small");
-	String(std::string("Credits: Gummy8unny - Edited by Shynd").c_str(), 10, Process->Size[1] - 20, D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS");
+	String(std::string("Credits: Gummy8unny - Edited by Shynd").c_str(), 10, Process->Size[1] - (Menu->largeFont == false ? 20 : 40), D3DCOLOR_XRGB(255, 255, 255), false, "RobotoS");
 
 	//String(std::to_string(directX->frames).c_str(), 100, 100, D3DCOLOR_XRGB(0, 255, 0), false, "small");
 
@@ -28,19 +28,19 @@ void cDrawing::Draw()
 			String(std::string("F2: Animals Off").c_str(), 100, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 
 		if (Vars.ESP.Player.bActive)
-			String(std::string("F3: Players On").c_str(), 250, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
+			String(std::string("F3: Players On").c_str(), (Menu->largeFont == false ? 250 : 500), screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 		else
-			String(std::string("F3: Players Off").c_str(), 250, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
+			String(std::string("F3: Players Off").c_str(), (Menu->largeFont == false ? 250 : 500), screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 
 		if (Vars.ESP.Ships.bActive)
-			String(std::string("F4: Ships On").c_str(), 400, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
+			String(std::string("F4: Ships On").c_str(), (Menu->largeFont == false ? 400 : 900), screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 		else
-			String(std::string("F4: Ships Off").c_str(), 400, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
+			String(std::string("F4: Ships Off").c_str(), (Menu->largeFont == false ? 400 : 900), screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 
 		if (Vars.ESP.Treasure.bActive)
-			String(std::string("F5: Treasure On").c_str(), 550, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
+			String(std::string("F5: Treasure On").c_str(), (Menu->largeFont == false ? 550 : 1300), screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoM");
 		else
-			String(std::string("F5: Treasure Off").c_str(), 550, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
+			String(std::string("F5: Treasure Off").c_str(), (Menu->largeFont == false ? 550 : 1300), screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoM");
 	}
 
 	//draw crosshair

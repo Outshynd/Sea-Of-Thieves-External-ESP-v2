@@ -12,6 +12,7 @@
 #include <string>
 #include <iostream>
 #include "Cheat.h"
+#include "Menu.h"
 
 
 struct sFont
