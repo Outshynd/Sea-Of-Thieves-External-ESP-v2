@@ -217,7 +217,7 @@ void cCheat::readData()
 			//		break;
 			//	}
 			//}
-			
+
 
 			auto Islands = IslandService.GetIslandArray();
 			if (!Islands.IsValid())
@@ -232,7 +232,7 @@ void cCheat::readData()
 				if (Island.IslandType == 0)
 					continue;
 
-				
+
 
 				Color color = { Vars.ESP.World.colorWorld[0],Vars.ESP.World.colorWorld[1],Vars.ESP.World.colorWorld[2],Vars.ESP.World.colorWorld[3] };
 
@@ -786,7 +786,7 @@ void cCheat::readData()
 			pos.z = 35000.0f;
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 
-			if (distance > 6000)
+			if (distance > 6000 || distance < 150)
 				continue;
 
 			Color color = { 255,255,255 };
@@ -815,10 +815,28 @@ void cCheat::readData()
 			}
 		}
 
+		else if (name.find("BP_Rowboat") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 20.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			if (distance < 40)
+				continue;
+
+			Color color = { 255,255,255 };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Mermaid", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
 		else if (name.find("BP_FogBank_C") != std::string::npos)
 		{
 			auto pos = actor.GetRootComponent().GetPosition();
-			//pos.z += 20.0f;
 			pos.z = 5000.0f;
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 
@@ -831,6 +849,26 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Fog", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
+		else if (name.find("BP_RomeBeacon") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 150;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			if (distance <= 150)
+				continue;
+
+
+			Color color = Color{ Vars.ESP.colorSpecial[0], Vars.ESP.colorSpecial[1], Vars.ESP.colorSpecial[2], Vars.ESP.colorSpecial[3] };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Glorious Sea Dog Chest", Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
