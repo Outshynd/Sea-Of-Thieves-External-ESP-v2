@@ -1,4 +1,4 @@
-#include "Cheat.h"
+﻿#include "Cheat.h"
 #include "Menu.h"
 //#include "Process.h"
 #include <fstream>
@@ -50,7 +50,7 @@ void cCheat::readData()
 
 	uintptr_t address = 0;
 
-	if (!UWorld)
+	if (!UWorld) //baseModule+0x63E368 - 2.0.14
 	{
 		address = Mem->FindSignature(baseModule, baseSize,
 			(BYTE*)("\x48\x8B\x05\x00\x00\x00\x00\x48\x8B\x88\x00\x00\x00\x00\x48\x85\xC9\x74\x06\x48\x8B\x49\x70"),
@@ -59,13 +59,13 @@ void cCheat::readData()
 		auto uworldoffset = Mem->Read<int32_t>(address + 3);
 		UWorld = address + uworldoffset + 7;
 	}
-	if (!GNames)
+	if (!GNames) //baseModule+0x1389238 - 2.0.14
 	{
 		address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x48\x8B\x1D\x00\x00\x00\x00\x48\x85\x00\x75\x3A", (char*)"xxx????xx?xx");
 		auto gnamesoffset = Mem->Read<int32_t>(address + 3);
 		GNames = Mem->Read<uintptr_t>(address + gnamesoffset + 7);
 	}
-	if (!GObjects)
+	if (!GObjects) //baseModule+0x1410990‬ - 2.0.14
 	{
 		address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x48\x8B\x15\x00\x00\x00\x00\x3B\x42\x1C", (char*)"xxx????xxx");
 		auto gobjectsoffset = Mem->Read<int32_t>(address + 3);
@@ -75,7 +75,7 @@ void cCheat::readData()
 
 	if (Names.empty())
 	{
-		std::ofstream myfile;
+		//std::ofstream myfile;
 		//myfile.open("Gnames.txt");
 
 		for (int i = 0; i < 206000; i++)
@@ -815,7 +815,7 @@ void cCheat::readData()
 			}
 		}
 
-		else if (name.find("BP_Rowboat") != std::string::npos)
+		else if (name.find("BP_RowboatRowingSeat_C") != std::string::npos)
 		{
 			auto pos = actor.GetRootComponent().GetPosition();
 			pos.z += 20.0f;
@@ -829,7 +829,7 @@ void cCheat::readData()
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
-				DrawString("Mermaid", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString("Rowboat", Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
