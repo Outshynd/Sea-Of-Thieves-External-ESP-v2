@@ -5,6 +5,8 @@
 
 cCheat* Cheat = new cCheat();
 
+bool __debug = false;
+
 std::string cCheat::getNameFromIDmem(int ID) {
 	try {
 		DWORD_PTR fNamePtr = Mem->Read<uintptr_t>(GNames + int(ID / 0x4000) * 0x8);
@@ -193,6 +195,44 @@ void cCheat::readData()
 			}
 		}
 
+		//Skeleton Lords from Ashen Winds xpac
+		if (name.find("BP_GiantSkeletonPawn") != std::string::npos)
+		{
+			if (!Vars.ESP.Skeleton.bActive)
+				continue;
+
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				Vector3 headPos = Vector3(pos.x, pos.y, pos.z + 75);
+
+				Vector2 ScreenTop;
+				Color boxColor = { Vars.ESP.Skeleton.colorSkeleton[0],Vars.ESP.Skeleton.colorSkeleton[1],Vars.ESP.Skeleton.colorSkeleton[2],Vars.ESP.Skeleton.colorSkeleton[3] };
+				//Color boxColor = { 255,255,0,255 };
+
+				if (Misc->WorldToScreen(headPos, &ScreenTop))
+				{
+					int hi = (Screen.y - ScreenTop.y) * 2;
+					int wi = hi * 0.50;
+
+					DrawBox(ScreenTop.x - wi / 2, ScreenTop.y, wi, hi, boxColor);
+					DrawString("Skeleton Lord", ScreenTop.x, ScreenTop.y - 14, Color{ 255,255,255 }, true, "RobotoS_Bold");
+					DrawString(std::string(std::to_string((int)distance) + "m").c_str(), ScreenTop.x, ScreenTop.y - (Menu->largeFont == false ? 26 : 52), Color{ 255,255,255 }, true, "RobotoS");
+					if (Vars.ESP.Skeleton.bWeapon)
+					{
+						auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
+
+						if (ItemName.length() >= 4 && ItemName.length() < 32)
+							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS_Bold");
+					}
+
+				}
+			}
+		}
+
 		else if (name.find("IslandService") != std::string::npos)
 		{
 			//disable islands for now
@@ -302,6 +342,48 @@ void cCheat::readData()
 
 		}
 
+		else if (name.find("Signal_Flameheart") != std::string::npos)
+		{
+			if (!Vars.ESP.World.bFort)
+				continue;
+
+			auto pos = actor.GetRootComponent().GetPosition();
+			//pos.z += 60000; //to get it to show over the top of the cloud at distance
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			Color color = { Vars.ESP.World.colorWorld[0],Vars.ESP.World.colorWorld[1],Vars.ESP.World.colorWorld[2],Vars.ESP.World.colorWorld[3] };
+
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Flameheart Signal", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+
+		}
+
+		else if (name.find("AshenLord_SkullCloud_C") != std::string::npos)
+		{
+			if (!Vars.ESP.World.bFort)
+				continue;
+
+			auto pos = actor.GetRootComponent().GetPosition();
+			//pos.z += 60000; //to get it to show over the top of the cloud at distance
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			Color color = { Vars.ESP.World.colorWorld[0],Vars.ESP.World.colorWorld[1],Vars.ESP.World.colorWorld[2],Vars.ESP.World.colorWorld[3] };
+
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Ashen Lord Cloud", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+
+		}
+
 
 		else if (name.find("MapTable_C") != std::string::npos)
 		{
@@ -400,7 +482,7 @@ void cCheat::readData()
 					continue;
 
 				tempTeam.teamName = crews[c].GetShipType();
-				/*if (SOT->Ships[c].type.find("azure") != std::string::npos)
+				if (SOT->Ships[c].type.find("azure") != std::string::npos)
 					tempTeam.color = Color(0, 255, 255);
 				else if (SOT->Ships[c].type.find("regal") != std::string::npos)
 					tempTeam.color = Color(255, 0, 255);
@@ -411,9 +493,9 @@ void cCheat::readData()
 				else if (SOT->Ships[c].type.find("golden") != std::string::npos)
 					tempTeam.color = Color(255, 255, 0);
 				else
-					tempTeam.color = Color(255, 255, 255);*/
+					tempTeam.color = Color(255, 255, 255);
 
-				tempTeam.color = Color(255, 255, 255);
+				//tempTeam.color = Color(255, 255, 255);
 
 				SOT->Ships[c].crewID = crews[c].GetCrewID();
 
@@ -520,6 +602,8 @@ void cCheat::readData()
 
 			FGuid crewid = Ship.GetCrewOwnershipComponent().GetCrewId();
 
+
+
 			if (name.find("NetProxy") != std::string::npos)
 			{
 				if (Ship.GetOwningActor())
@@ -562,7 +646,12 @@ void cCheat::readData()
 			Color color = { Vars.ESP.Ships.colorEnemy[0],Vars.ESP.Ships.colorEnemy[1],Vars.ESP.Ships.colorEnemy[2],Vars.ESP.Ships.colorEnemy[3] };
 
 			if (SOT->localPlayer.crewID == Ship.GetCrewOwnershipComponent().GetCrewId())
+			{
+				//DWORD_PTR shipInternalWater = Mem->Read<uintptr_t>()
+
+
 				color = { Vars.ESP.Ships.colorTeam[0],Vars.ESP.Ships.colorTeam[1],Vars.ESP.Ships.colorTeam[2],Vars.ESP.Ships.colorTeam[3] };
+			}
 
 
 			Vector2 Screen;
@@ -753,6 +842,9 @@ void cCheat::readData()
 			if (name.find("Pineapple") != std::string::npos || name.find("AnyItemCrate") != std::string::npos || name.find("StrongholdKey") != std::string::npos)
 				skip = false;
 
+			if (name.find("SkeletonOrders") != std::string::npos)
+				skip = false;
+
 			if (skip)
 				continue;
 
@@ -815,6 +907,38 @@ void cCheat::readData()
 			}
 		}
 
+		else if (name.find("HoFFort") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			//pos.z += 20.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			Color color = { 255,255,255 };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Ashen Guardian's Notes", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
+		else if (name.find("SeaboundSoul_AshenChestRiddle") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			//pos.z += 20.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			Color color = { 255,255,255 };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Ashen Guardian's Notes", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
 		else if (name.find("BP_RowboatRowingSeat_C") != std::string::npos)
 		{
 			auto pos = actor.GetRootComponent().GetPosition();
@@ -869,6 +993,99 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString("Glorious Sea Dog Chest", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
+
+
+		else if (name.find("BP_GhostShips_Signal_Flameheart_NetProxy_C") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 150;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+			if (distance <= 150)
+				continue;
+
+
+			Color color = Color{ Vars.ESP.colorSpecial[0], Vars.ESP.colorSpecial[1], Vars.ESP.colorSpecial[2], Vars.ESP.colorSpecial[3] };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Flameheart", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
+		else if (name.find("BP_AggressiveGhostShip_C") != std::string::npos)
+		{
+			if (!Vars.ESP.Ships.bActive)
+				continue;
+
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			auto Ship = *reinterpret_cast<AShip*>(&actors[i]);
+
+			if (name.find("NetProxy") != std::string::npos)
+				if (Ship.GetOwningActor())
+					continue;
+
+			Color color = { Vars.ESP.World.colorWorld[0], Vars.ESP.World.colorWorld[1], Vars.ESP.World.colorWorld[2], Vars.ESP.World.colorWorld[3] };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 2000), &Screen))
+			{
+				DrawString("Ghost Ship", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
+		else if (name.find("BP_AggressiveGhostShip_Mine_C") != std::string::npos)
+		{
+			if (!Vars.ESP.Ships.bActive)
+				continue;
+
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { Vars.ESP.World.colorWorld[0], Vars.ESP.World.colorWorld[1], Vars.ESP.World.colorWorld[2], Vars.ESP.World.colorWorld[3] };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Ghost Ship Mine", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
+		else if (name.find("BP_GhostShipRewardMarker_C") != std::string::npos)
+		{
+			if (!Vars.ESP.Treasure.bActive)
+				continue;
+
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { Vars.ESP.World.colorWorld[0], Vars.ESP.World.colorWorld[1], Vars.ESP.World.colorWorld[2], Vars.ESP.World.colorWorld[3] };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString("Ghost Ship Rewards", Screen.x, Screen.y, color, true, "RobotoM");
+				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+			}
+		}
+
+		else if (__debug == true && name.find("BP") != std::string::npos)
+		{
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { Vars.ESP.World.colorWorld[0], Vars.ESP.World.colorWorld[1], Vars.ESP.World.colorWorld[2], Vars.ESP.World.colorWorld[3] };
+
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString(name.c_str(), Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}

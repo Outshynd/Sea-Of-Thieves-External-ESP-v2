@@ -276,7 +276,7 @@ public:
 	int GetHealth();
 	int GetMaxHealth();
 private:
-	unsigned char UnknownData00[0xD4];
+	unsigned char UnknownData00[0xD8];
 	float maxHealth;
 	float health;
 	unsigned char UnknownData01[0xC4];

@@ -32,6 +32,7 @@ KeyToggle toggleF2(VK_F2);
 KeyToggle toggleF3(VK_F3);
 KeyToggle toggleF4(VK_F4);
 KeyToggle toggleF5(VK_F5);
+KeyToggle toggleF6(VK_F5);
 
 POINT p;
 bool moving = false;

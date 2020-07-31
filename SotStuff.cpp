@@ -267,5 +267,5 @@ int UIslandDataAssetEntry::GetNameID()
 
 std::wstring UIslandDataAssetEntry::GetName()
 {
-	return Mem->Read<textx>(Mem->Read<uintptr_t>(this->IslandName + 0xB0)).word;
+	return Mem->Read<textx>(Mem->Read<uintptr_t>(this->IslandName + 0x28)).word;//+ 0xB0)).word;
 }

@@ -8,6 +8,7 @@ public:
 	bool menuOpen = true;
 	Vector2 curPos;
 	bool largeFont = false;
+	bool ShowRowboats = true;
 
 public:
 	void DrawMenu();
