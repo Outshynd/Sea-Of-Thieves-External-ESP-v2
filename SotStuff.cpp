@@ -162,7 +162,8 @@ UCrewOwnershipComponent AShip::GetCrewOwnershipComponent()
 
 uintptr_t AShip::GetOwningActor()
 {
-	return *(uintptr_t*)(__pad0x0 + 0x410);
+	//return *(uintptr_t*)(__pad0x0 + 0x410);
+	return *(uintptr_t*)(__pad0x0 + 0x468); //2.0.17.2
 }
 
 TArray<struct FXMarksTheSpotMapMark> AXMarksTheSpotMap::GetMarks()
@@ -222,12 +223,16 @@ TArray<struct Vector2> AMapTable::GetMapPins()
 
 TArray<class FWorldMapShipLocation> AMapTable::GetTrackedShips()
 {
-	return *(TArray<class FWorldMapShipLocation>*)(__pad0x0 + Offsets.AMapTable.TrackedShips);
+	//return *(TArray<class FWorldMapShipLocation>*)(__pad0x0 + Offsets.AMapTable.TrackedShips);
+	return *(TArray<class FWorldMapShipLocation>*)(__pad0x0 + Offsets.AMapTable.MapPins + 0x10);
 }
 
 TArray<struct Vector3> AMapTable::GetTrackedBootyItemLocations()
 {
-	return *(TArray<struct Vector3>*)(__pad0x0 + 0x0508);
+	//return *(TArray<struct Vector3>*)(__pad0x0 + 0x0508);
+	//return *(TArray<struct Vector3>*)(__pad0x0 + 0x0500);
+	//return *(TArray<struct Vector3>*)(__pad0x0 + 0x0520);
+	return *(TArray<struct Vector3>*)(__pad0x0 + Offsets.AMapTable.MapPins + 0x20);
 }
 
 TArray<struct FIsland> AIslandService::GetIslandArray()
@@ -268,4 +273,5 @@ int UIslandDataAssetEntry::GetNameID()
 std::wstring UIslandDataAssetEntry::GetName()
 {
 	return Mem->Read<textx>(Mem->Read<uintptr_t>(this->IslandName + 0x28)).word;//+ 0xB0)).word;
+	//return Mem->Read<textx>(Mem->Read<uintptr_t>(this->IslandName)).word;
 }

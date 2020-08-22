@@ -2,10 +2,14 @@
 #include "Menu.h"
 //#include "Process.h"
 #include <fstream>
+#include <ctime>
 
 cCheat* Cheat = new cCheat();
 
 bool __debug = false;
+clock_t elapsed = 0;
+clock_t lastTime = clock();
+Vector2 last_xy = Vector2(0.0f, 0.0f);
 
 std::string cCheat::getNameFromIDmem(int ID) {
 	try {
@@ -23,12 +27,17 @@ std::string cCheat::getNameFromIDmap(int ID)
 {
 	auto it = Names.find(ID);
 
-
 	if (it == Names.end())
 		return "";
 	else
 		return it->second;
 }
+
+double _clockToMilliseconds(clock_t ticks) {
+	// units/(units/time) => time (seconds) * 1000 = milliseconds
+	return (ticks / (double)CLOCKS_PER_SEC) * 1000.0;
+}
+
 
 Vector2 RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle, bool angleInRadians = false)
 {
@@ -140,11 +149,25 @@ void cCheat::readData()
 	DrawString(dir, compass_pos.x, compass_pos.y, Color{ 255, 255, 255 }, true, "RobotoL");
 
 
+	//spedometer
+	Vector2 my_xy = Vector2(SOT->localPlayer.position.x, SOT->localPlayer.position.y);
+	//DrawString(std::string(std::to_string(my_xy.x) + ", " + std::to_string(my_xy.y)).c_str(), 1000, 1000, Color{ 255, 255, 255 }, true, "RobotoS_Bold");
+	if (last_xy.x == 0.0f && last_xy.y == 0.0f)
+		last_xy = my_xy;
+
+	if (my_xy.DistTo(last_xy) > 0.5f)
+	{
+		last_xy = my_xy;
+		
+	}
+
 
 	auto level = world.GetLevel();
 	auto actors = level.GetActors();
 	if (!actors.IsValid())
 		return;
+
+	//return;
 
 	for (int i = 0; i < actors.Length(); ++i)
 	{
@@ -155,8 +178,6 @@ void cCheat::readData()
 
 		auto id = actor.GetID();
 		auto name = getNameFromIDmem(id);
-
-
 
 		if (name.find("BP_Skeleton") != std::string::npos && name.find("Pawn") != std::string::npos)
 		{
@@ -236,7 +257,7 @@ void cCheat::readData()
 		else if (name.find("IslandService") != std::string::npos)
 		{
 			//disable islands for now
-			//continue;
+			continue;
 
 			if (!Vars.ESP.World.bIslands)
 				continue;
@@ -262,8 +283,6 @@ void cCheat::readData()
 			auto Islands = IslandService.GetIslandArray();
 			if (!Islands.IsValid())
 				continue;
-
-			continue;
 
 			for (int p = 0; p < Islands.Length(); ++p)
 			{
@@ -390,27 +409,27 @@ void cCheat::readData()
 			auto Table = *reinterpret_cast<AMapTable*>(&actors[i]);
 
 
-			auto Ships = Table.GetTrackedShips();
+			//auto Ships = Table.GetTrackedShips();
 
-			if (Ships.IsValid())
-			{
+			//if (Ships.IsValid())
+			//{
 
-				for (int p = 0; p < Ships.Length(); ++p)
-				{
-					auto Ship = Ships[p];
+			//	for (int p = 0; p < Ships.Length(); ++p)
+			//	{
+			//		auto Ship = Ships[p];
 
-					for (int c = 0; c < 6; ++c)
-					{
-						if (Ship.GetCrewId() == SOT->Ships[c].crewID)
-						{
-							int id = Ship.GetUObject().nameId;
-							auto temp = getNameFromIDmem(id);
-							SOT->Ships[c].type = getNameFromIDmem(Ship.GetUObject().nameId);
-						}
-					}
+			//		for (int c = 0; c < 6; ++c)
+			//		{
+			//			if (Ship.GetCrewId() == SOT->Ships[c].crewID)
+			//			{
+			//				int id = Ship.GetUObject().nameId;
+			//				auto temp = getNameFromIDmem(id);
+			//				SOT->Ships[c].type = getNameFromIDmem(Ship.GetUObject().nameId);
+			//			}
+			//		}
 
-				}
-			}
+			//	}
+			//}
 
 			auto Chests = Table.GetTrackedBootyItemLocations();
 
@@ -518,15 +537,18 @@ void cCheat::readData()
 
 		else if (name.find("BP_PlayerPirate_C") != std::string::npos)
 		{
+
 			if (!Vars.ESP.Player.bActive)
 				continue;
+
+			bool revivable = false;
 
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 
 			int health = actor.GetHealthComponent().GetHealth();
-			if (health <= 0)
-				continue;
+			if (health <= 0)				
+				revivable = true;//continue;
 
 			auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 
@@ -575,7 +597,10 @@ void cCheat::readData()
 					if (Vars.ESP.Player.bWeapon)
 					{
 						if (ItemName.length() >= 4 && ItemName.length() < 32)
-							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS_Bold");
+							if (revivable == false)
+								DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS_Bold");
+							else
+								DrawString("DOWN", ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoM");
 					}
 					if (Vars.ESP.Player.bHealth)
 					{
@@ -633,6 +658,7 @@ void cCheat::readData()
 		{
 			if (!Vars.ESP.Ships.bActive)
 				continue;
+
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 
@@ -1002,11 +1028,11 @@ void cCheat::readData()
 		else if (name.find("BP_GhostShips_Signal_Flameheart_NetProxy_C") != std::string::npos)
 		{
 			auto pos = actor.GetRootComponent().GetPosition();
-			pos.z += 150;
+			//pos.z += 150;
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 
-			if (distance <= 150)
-				continue;
+			//if (distance <= 150)
+			//	continue;
 
 
 			Color color = Color{ Vars.ESP.colorSpecial[0], Vars.ESP.colorSpecial[1], Vars.ESP.colorSpecial[2], Vars.ESP.colorSpecial[3] };
