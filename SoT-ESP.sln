@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sea Of Thieves External ESP v2", "Sea Of Thieves External ESP v2.vcxproj", "{E712E45A-BDB3-4820-B0F1-8731302B3DDA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoT-ESP", "Sea Of Thieves External ESP v2.vcxproj", "{E712E45A-BDB3-4820-B0F1-8731302B3DDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
