@@ -12,7 +12,7 @@ std::string cCheat::getNameFromIDmem(int ID) {
 		return std::string("");
 	}
 }
-Vector2 AimAtPos(float x, float y)
+void AimAtPos(float x, float y)
 {
 	float ScreenCenterX = (Process->Size[0] / 2);
 	float ScreenCenterY = (Process->Size[1] / 2);
@@ -25,7 +25,6 @@ Vector2 AimAtPos(float x, float y)
 			TargetX = -(ScreenCenterX - x);
 			if (TargetX + ScreenCenterX > ScreenCenterX * 2) TargetX = 0;
 		}
-
 		if (x < ScreenCenterX)
 		{
 			TargetX = x - ScreenCenterX;
@@ -39,7 +38,6 @@ Vector2 AimAtPos(float x, float y)
 			TargetY = -(ScreenCenterY - y);
 			if (TargetY + ScreenCenterY > ScreenCenterY * 2) TargetY = 0;
 		}
-
 		if (y < ScreenCenterY)
 		{
 			TargetY = y - ScreenCenterY;
@@ -49,7 +47,6 @@ Vector2 AimAtPos(float x, float y)
 	TargetX /= 2;
 	TargetY /= 2;
 	mouse_event(MOUSEEVENTF_MOVE, TargetX, TargetY, 0, 0);
-	return Vector2(TargetX, TargetY);
 }
 void cCheat::readData()
 {
