@@ -136,6 +136,5 @@ private:
 		UWorld, persistentLevel;
 	std::map<int, std::string> Names;
 	std::string getNameFromIDmem(int ID);
-	std::string getNameFromIDmap(int ID);
 };
 extern cCheat* Cheat;

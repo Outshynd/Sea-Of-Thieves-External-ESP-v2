@@ -1,7 +1,6 @@
 ﻿#include "Cheat.h"
 #include "Vars.h"
 cCheat* Cheat = new cCheat();
-Vector2 last_xy = Vector2(0.0f, 0.0f);
 std::string cCheat::getNameFromIDmem(int ID) {
 	try {
 		DWORD_PTR fNamePtr = Mem->Read<uintptr_t>(GNames + int(ID / 0x4000) * 0x8);
@@ -85,13 +84,6 @@ void cCheat::readData()
 		dir = "NW";
 	DrawString(std::to_string((int)compass).c_str(), compass_pos.x, compass_pos.y + 20, Color{ 255,255,255 }, true, "RobotoS");
 	DrawString(dir, compass_pos.x, compass_pos.y, Color{ 255, 255, 255 }, true, "RobotoS");
-	Vector2 my_xy = Vector2(SOT->localPlayer.position.x, SOT->localPlayer.position.y);
-	if (last_xy.x == 0.0f && last_xy.y == 0.0f)
-		last_xy = my_xy;
-	if (my_xy.DistTo(last_xy) > 0.5f)
-	{
-		last_xy = my_xy;
-	}
 	auto level = world.GetLevel();
 	auto actors = level.GetActors();
 	if (!actors.IsValid())
