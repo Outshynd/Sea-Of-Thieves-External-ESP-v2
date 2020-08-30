@@ -54,7 +54,7 @@ public:
 	Players localPlayer;
 	Players Pirates[24];
 	Camera localCamera;
-	Ships  Ships[6];
+	Ships Ships[6];
 	std::vector<Vector2> XMarks;
 };
 template<class TEnum>
@@ -62,20 +62,16 @@ class TEnumAsByte
 {
 public:
 	inline TEnumAsByte()
-	{
-	}
+	{}
 	inline TEnumAsByte(TEnum _value)
 		: value(static_cast<uint8_t>(_value))
-	{
-	}
+	{}
 	explicit inline TEnumAsByte(int32_t _value)
 		: value(static_cast<uint8_t>(_value))
-	{
-	}
+	{}
 	explicit inline TEnumAsByte(uint8_t _value)
 		: value(_value)
-	{
-	}
+	{}
 	inline operator TEnum() const
 	{
 		return (TEnum)value;
@@ -224,10 +220,10 @@ public:
 	int GetHealth();
 	int GetMaxHealth();
 private:
-	unsigned char UnknownData00[0xD8];
-	float maxHealth;
 	float health;
+	float maxHealth;
 	unsigned char UnknownData01[0xC4];
+	unsigned char UnknownData00[0xD8];
 };
 class UItemDesc
 {
@@ -333,7 +329,7 @@ class APlayerCameraManager
 public:
 	Vector3 GetCameraPosition();
 	Vector3 GetCameraRotation();
-	float	GetCameraFOV();
+	float GetCameraFOV();
 private:
 	char __pad0x0[0x4E0];
 	Vector3 position;
@@ -351,7 +347,6 @@ class APlayerController
 public:
 	AActor GetActor();
 	APlayerCameraManager GetCameraManager();
-	Vector3 GetPlayerAngles();
 private:
 	char __pad0x0[0x1000];
 };
@@ -359,7 +354,6 @@ class ULocalPlayer
 {
 public:
 	APlayerController GetPlayerController();
-	void SetPlayerAngles(Vector3 angles);
 private:
 	char __pad0x0[0x1000];
 };
@@ -373,8 +367,8 @@ private:
 class cUWorld
 {
 public:
-	ULevel GetLevel()  const;
-	UGameInstance GetGameInstance()  const;
+	ULevel GetLevel() const;
+	UGameInstance GetGameInstance() const;
 public:
 	char __pad0x0[0x1000];
 };
@@ -403,7 +397,7 @@ private:
 class AItemProxy
 {
 public:
-	ABootyItemInfo  GetBootyItemInfo();
+	ABootyItemInfo GetBootyItemInfo();
 private:
 	char __pad0x0[0x1000];
 };

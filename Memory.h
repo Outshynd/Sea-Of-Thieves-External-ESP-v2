@@ -19,10 +19,10 @@ public:
 	{
 		WriteProcessMemory(hProcess, (LPVOID)dwAddress, &write, sizeof(cData), NULL);
 	}
-	virtual HANDLE  Process(const char* ProcessName);
+	virtual HANDLE Process(const char* ProcessName);
 	virtual uintptr_t Module(const char* ModuleName);
 	virtual uintptr_t ModuleSize(const char* ModuleName);
-	virtual bool  DataCompare(BYTE* data, BYTE* sign, char* mask);
+	virtual bool DataCompare(BYTE* data, BYTE* sign, char* mask);
 	virtual uintptr_t FindSignature(uintptr_t base, uintptr_t size, BYTE* sign, char* mask);
 };
 extern CMemory* Mem;

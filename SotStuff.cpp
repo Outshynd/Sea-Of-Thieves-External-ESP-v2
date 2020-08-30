@@ -83,7 +83,7 @@ TArray<class APlayerState*> FCrew::GetPlayers()
 }
 std::string FCrew::GetShipType()
 {
-	switch (this->maxPlayersOnShip)
+	switch(this->maxPlayersOnShip)
 	{
 	case 2:
 		return "Sloop";

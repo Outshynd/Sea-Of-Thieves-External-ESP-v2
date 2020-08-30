@@ -141,7 +141,6 @@ public:
 		x = (_x * c) - (_y * s);
 		y = (_x * s) + (_y * c);
 	}
-public:
 	float x, y;
 };
 class Vector3
@@ -301,6 +300,5 @@ public:
 			y > -0.01f && y < 0.01f &&
 			z > -0.01f && z < 0.01f);
 	}
-public:
 	float x, y, z;
 };

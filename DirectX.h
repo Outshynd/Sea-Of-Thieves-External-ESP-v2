@@ -1,7 +1,7 @@
 #pragma once
-#include <windowsx.h>
-#include <d3dx9.h>
 #include "Cheat.h"
+#include <d3dx9.h>
+#include <windowsx.h>
 struct sFont
 {
 	ID3DXFont* Font;

@@ -27,19 +27,8 @@ KeyToggle toggleF3(VK_F3);
 KeyToggle toggleF4(VK_F4);
 KeyToggle toggleF5(VK_F5);
 KeyToggle toggleF6(VK_F6);
-POINT p;
-bool moving = false;
-int windowPosX = 0;
-int windowPosY = 0;
-int clickX = 0;
-int clickY = 0;
-double clockToMilliseconds(clock_t ticks) {
-	return (ticks / (double)CLOCKS_PER_SEC) * 1000.0;
-}
 clock_t deltaTime = 0;
 unsigned int frames = 0;
-double  frameRate = 30;
-double  averageFrameTimeMilliseconds = 33.333;
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
@@ -145,7 +134,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 }
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (message)
+	switch(message)
 	{
 	case WM_SIZE:
 		Process->zoomOnce = false;
@@ -167,7 +156,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	{
 		PostQuitMessage(0);
 		return 0;
-	} break;
+		break;
+	}
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

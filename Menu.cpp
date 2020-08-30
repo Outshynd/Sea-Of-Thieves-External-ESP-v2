@@ -32,9 +32,8 @@ void cDrawing::Draw()
 		else
 			String(std::string("F6: Animals").c_str(), 510, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoS");
 	}
-    //crosshair
 	Line(Process->Size[0] / 2 - 5, Process->Size[1] / 2, Process->Size[0] / 2 + 5, Process->Size[1] / 2, D3DCOLOR_XRGB(255, 0, 0));
     Line(Process->Size[0] / 2, Process->Size[1] / 2 - 5, Process->Size[0] / 2, Process->Size[1] / 2 + 5, D3DCOLOR_XRGB(255, 0, 0));
 	if (Menu->menuOpen)
-		DrawPlayersList(0, 100, Cheat->Crews);
+		DrawPlayersList(0, 50, Cheat->Crews);
 }

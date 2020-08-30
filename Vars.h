@@ -8,12 +8,12 @@ public:
 		struct World
 		{
 			int colorWorld[4];
-			bool bActive, bShipWreck, bMermaid, bFort, bReapersChest, bMapPins;
+			bool bActive, bFort, bMapPins, bMermaid, bReapersChest, bShipWreck;
 		}World;
 		struct Players
 		{
 			int colorEnemy[4], colorTeam[4];
-			bool bActive, bWeapon, bName, bHealth, bTeam;
+			bool bActive, bHealth, bName, bTeam, bWeapon;
 		}Players;
 		struct Skeletons
 		{
@@ -31,7 +31,7 @@ public:
 		}Treasure;
 		struct Animals
 		{
-			bool bActive, bSnake, bChicken, bPig;
+			bool bActive, bChicken, bPig, bSnake;
 		}Animals;
 	}ESP;
 };
