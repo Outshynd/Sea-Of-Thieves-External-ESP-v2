@@ -132,7 +132,7 @@ void cCheat::readData()
 			}
 		}
 		//SKELETON LORD
-		else if (name.find("BP_GiantSkeleton") != std::string::npos)
+		else if (name.find("BP_GiantSkeletonPawnBase") != std::string::npos)
 		{
 			if (!Vars.ESP.Skeletons.bActive)
 				continue;
