@@ -226,10 +226,10 @@ public:
 	int GetHealth();
 	int GetMaxHealth();
 private:
+	unsigned char UnknownData00[0xD8];
 	float health;
 	float maxHealth;
 	unsigned char UnknownData01[0xC4];
-	unsigned char UnknownData00[0xD8];
 };
 class UItemDesc
 {
