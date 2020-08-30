@@ -23,11 +23,11 @@ APlayerState AActor::GetPlayerState()
 }
 UWieldedItemComponent AActor::GetWieldedItemComponent()
 {
-	return Mem->Read < UWieldedItemComponent>(*(uintptr_t*)(__pad0x0 + Offsets.AActor.WieldedItemComponent));
+	return Mem->Read<UWieldedItemComponent>(*(uintptr_t*)(__pad0x0 + Offsets.AActor.WieldedItemComponent));
 }
 UHealthComponent AActor::GetHealthComponent()
 {
-	return Mem->Read< UHealthComponent>(*(uintptr_t*)(__pad0x0 + Offsets.AActor.HealthComponent));
+	return Mem->Read<UHealthComponent>(*(uintptr_t*)(__pad0x0 + Offsets.AActor.HealthComponent));
 }
 TArray<Chunk*> ULevel::GetActors() const
 {
