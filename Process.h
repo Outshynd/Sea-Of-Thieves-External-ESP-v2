@@ -1,8 +1,6 @@
 #pragma once
-#include <string>
 #include "Memory.h"
-
-
+#include <string>
 class cProcess
 {
 public:
@@ -10,7 +8,6 @@ public:
 	int Position[2];
 	HWND myWindow;
 	bool zoomOnce = false;
-public:
 	bool attachProcess(std::string Process);
 	bool setWindow(std::string Window);
 	bool isWindowActive();
@@ -22,5 +19,4 @@ private:
 	HWND targetWindow;
 	HANDLE targetProcess;
 };
-
 extern cProcess* Process;

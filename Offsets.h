@@ -1,20 +1,18 @@
 #pragma once
-
-
 class offsets {
 public:
 	struct UWorld
 	{
-		int PersistentLevel;
-		int OwningGameInstance;
+		int PersistentLevel = 0x30;
+		int OwningGameInstance = 0x1C0;
 	}UWorld;
 	struct UGameInstance
 	{
-		int LocalPlayers;
+		int LocalPlayers = 0x38;
 	}UGameInstance;
 	struct UPlayer
 	{
-		int PlayerController;
+		int PlayerController = 0x30;
 	}ULocalPlayer;
 	struct ULevel
 	{
@@ -22,68 +20,69 @@ public:
 	}ULevel;
 	struct APlayerController
 	{
-		int Pawn;
-		int CameraManager;
-		int ControlRotation;
+		int Pawn = 0x460;
+		int CameraManager = 0x4E8;
+		int ControlRotation = 0x2AC;
 	}APlayerController;
 	struct AActor
 	{
 		int actorId = 0x18;
-		int rootComponent;
-		int PlayerState;
-		int WieldedItemComponent;
-		int HealthComponent;
+		int rootComponent = 0x170;
+		int PlayerState = 0x478;
+		int WieldedItemComponent = 0x880;
+		int HealthComponent = 0x8A8;
 	}AActor;
 	struct APlayerState
 	{
-		int PlayerName;
+		int PlayerName = 0x460;
 	}APlayerState;
 	struct APlayerCameraManager
 	{
-		int CameraCache;
+		int CameraCache = 0x4D0;
 	}APlayerCameraManager;
 	struct AItemProxy
 	{
-		int AItemInfo;
+		int AItemInfo = 0x620;
 	}AItemProxy;
 	struct AItemInfo
 	{
-		int UItemDesc;
+		int UItemDesc = 0x4B0;
 	}AItemInfo;
 	struct ABootyItemInfo
 	{
-		int BootyType;
-		int Rarity;
+		int BootyType = 0x598;
+		int Rarity = 0x704;
 	}ABootyItemInfo;
 	struct AShip
 	{
-		int CrewOwnershipComponent;
+		int CrewOwnershipComponent = 0x7D0;
 	}AShip;
 	struct UCrewOwnershipComponent
 	{
-		int CrewId;
+		int CrewId = 0xD4;
 	}UCrewOwnershipComponent;
 	struct AFauna
 	{
-		int Name;
+		int Name = 0x888;
 	}AFauna;
+	
 	struct AMaptTable
 	{
-		int ServerCenter;
-		int MapPins;
-		int TrackedShips;
+		int ServerCenter = 0x528;
+		int MapPins = 0x548;
+		int TrackedShips = 0x558;
 	}AMapTable;
 	struct ACrewService
 	{
-		int Crews;
+		int Crews = 0x620;
 	}ACrewService;
 	struct UWieldedItemComponent
 	{
-		int WieldedItem;
+		int WieldedItem = 0x290;
 	}UWieldedItemComponent;
 	struct AWieldableItem
 	{
-		int ItemInfo;
+		int ItemInfo = 0x608;
 	}AWieldableItem;
 };
 extern offsets Offsets;

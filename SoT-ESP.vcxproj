@@ -137,7 +137,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cheat.cpp" />
-    <ClCompile Include="Config.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -149,7 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cheat.h" />
-    <ClInclude Include="Config.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="Drawing.h" />
     <ClInclude Include="json.h" />

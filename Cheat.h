@@ -1,16 +1,12 @@
 #pragma once
 #include "Misc.h"
-#include <vector>
 #include <map>
-#include "Config.h"
-
 struct Color
 {
 	int r;
 	int g;
 	int b;
 	int a;
-
 	Color()
 	{
 		this->r = 0;
@@ -18,7 +14,6 @@ struct Color
 		this->b = 0;
 		this->a = 255;
 	}
-
 	Color(int r, int g, int b)
 	{
 		this->r = r;
@@ -26,7 +21,6 @@ struct Color
 		this->b = b;
 		this->a = 255;
 	}
-
 	Color(int r, int g, int b, int a)
 	{
 		this->r = r;
@@ -34,7 +28,6 @@ struct Color
 		this->b = b;
 		this->a = a;
 	}
-
 	Color operator / (float div)
 	{
 		Color color = *this;
@@ -43,7 +36,6 @@ struct Color
 		color.b = color.b / div;
 		return color;
 	}
-
 	Color& operator /= (float div)
 	{
 		Color& color = *this;
@@ -52,7 +44,6 @@ struct Color
 		color.b /= div;
 		return color;
 	}
-
 	Color& operator *= (float coeff)
 	{
 		Color& color = *this;
@@ -61,7 +52,6 @@ struct Color
 		color.b *= coeff;
 		return color;
 	}
-
 	static Color FromHSB(float hue, float saturation, float brightness)
 	{
 		float h = hue == 1.0f ? 0 : hue * 6.0f;
@@ -69,7 +59,6 @@ struct Color
 		float p = brightness * (1.0f - saturation);
 		float q = brightness * (1.0f - saturation * f);
 		float t = brightness * (1.0f - (saturation * (1.0f - f)));
-
 		if (h < 1)
 		{
 			return Color(
@@ -119,28 +108,22 @@ struct Color
 			);
 		}
 	}
-
 };
 struct TeamMate
 {
 	std::string PlayerName;
 };
-
 struct Team
 {
 	Color color;
 	std::string teamName;
 	std::vector<TeamMate> Players;
 };
-
-
-
 class cCheat
 {
 public:
 	std::vector<Team>Crews;
-	bool bAnimals, bShips, bPlayers, bTreasure;
-public:
+	bool bPlayers, bShips, bTreasure, bAnimals;
 	void readData();
 	void DrawString(const char* szString, float X, float Y, Color COLOR, bool Centered, std::string name);
 	void DrawString(const wchar_t* szString, float X, float Y, Color COLOR, bool Centered, std::string name);
@@ -152,10 +135,7 @@ private:
 		GWorld, tempGNames, GNames, GObjects,
 		UWorld, persistentLevel;
 	std::map<int, std::string> Names;
-private:
 	std::string getNameFromIDmem(int ID);
 	std::string getNameFromIDmap(int ID);
-
 };
-
 extern cCheat* Cheat;
