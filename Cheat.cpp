@@ -12,6 +12,45 @@ std::string cCheat::getNameFromIDmem(int ID) {
 		return std::string("");
 	}
 }
+Vector2 AimAtPos(float x, float y)
+{
+	float ScreenCenterX = (Process->Size[0] / 2);
+	float ScreenCenterY = (Process->Size[1] / 2);
+	float TargetX = 0;
+	float TargetY = 0;
+	if (x != 0)
+	{
+		if (x > ScreenCenterX)
+		{
+			TargetX = -(ScreenCenterX - x);
+			if (TargetX + ScreenCenterX > ScreenCenterX * 2) TargetX = 0;
+		}
+
+		if (x < ScreenCenterX)
+		{
+			TargetX = x - ScreenCenterX;
+			if (TargetX + ScreenCenterX < 0) TargetX = 0;
+		}
+	}
+	if (y != 0)
+	{
+		if (y > ScreenCenterY)
+		{
+			TargetY = -(ScreenCenterY - y);
+			if (TargetY + ScreenCenterY > ScreenCenterY * 2) TargetY = 0;
+		}
+
+		if (y < ScreenCenterY)
+		{
+			TargetY = y - ScreenCenterY;
+			if (TargetY + ScreenCenterY < 0) TargetY = 0;
+		}
+	}
+	TargetX /= 2;
+	TargetY /= 2;
+	mouse_event(MOUSEEVENTF_MOVE, TargetX, TargetY, 0, 0);
+	return Vector2(TargetX, TargetY);
+}
 void cCheat::readData()
 {
 	if (!baseModule)
@@ -327,6 +366,12 @@ void cCheat::readData()
 					int hi = (Screen.y - ScreenTop.y) * 2;
 					int wi = hi * 0.5;
 					auto pirateName = Misc->wstringToString(actor.GetPlayerState().GetName());
+					if (GetAsyncKeyState(VK_CAPITAL))
+						if (ScreenTop.x > 850 && ScreenTop.x < 1050)
+							if (Vars.ESP.Players.bHeadshot)
+								AimAtPos(ScreenTop.x, ScreenTop.y + hi * .05);
+							else
+								AimAtPos(ScreenTop.x, ScreenTop.y + hi * .3);
 					for (int pirates = 0; pirates < 24; ++pirates)
 					{
 						if (SOT->Pirates[pirates].name == "")

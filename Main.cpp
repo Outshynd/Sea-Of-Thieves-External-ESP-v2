@@ -27,6 +27,7 @@ KeyToggle toggleF3(VK_F3);
 KeyToggle toggleF4(VK_F4);
 KeyToggle toggleF5(VK_F5);
 KeyToggle toggleF6(VK_F6);
+KeyToggle toggleF7(VK_F7);
 clock_t deltaTime = 0;
 unsigned int frames = 0;
 int WinMain(HINSTANCE hInstance,
@@ -117,6 +118,9 @@ int WinMain(HINSTANCE hInstance,
 			Vars.ESP.Animals.bChicken = !Vars.ESP.Animals.bChicken;
 			Vars.ESP.Animals.bPig = !Vars.ESP.Animals.bPig;
 			Vars.ESP.Animals.bSnake = !Vars.ESP.Animals.bSnake;
+		}
+		if (toggleF7) {
+			Vars.ESP.Players.bHeadshot = !Vars.ESP.Players.bHeadshot;
 		}
 		if (GetAsyncKeyState(VK_END))
 			break;

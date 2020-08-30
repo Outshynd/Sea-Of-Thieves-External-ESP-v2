@@ -10,7 +10,7 @@ public:
 		}World;
 		struct Players
 		{
-			bool bActive, bHealth, bName, bTeam, bWeapon;
+			bool bActive, bHeadshot, bHealth, bName, bTeam, bWeapon;
 		}Players;
 		struct Skeletons
 		{
