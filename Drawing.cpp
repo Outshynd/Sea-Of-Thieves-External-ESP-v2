@@ -66,7 +66,7 @@ void cDrawing::HealthBar(int health, float maxhealth, int x, int y, int width, i
 	int r = 255 - health * 2.55;
 	int g = health * 2.55;
 	float wtf = health / maxhealth;
-	int healthBar = height * wtf;
+	float healthBar = height * wtf;
 	int healthBarDelta = height - healthBar;
 	FilledBox(x - width / 2 - 6, y - 1, 5, height + 1, D3DCOLOR_XRGB(10, 10, 10));
 	FilledBox(x - width / 2 - 5, y + healthBarDelta, 3, healthBar, D3DCOLOR_XRGB(r, g, 0));
