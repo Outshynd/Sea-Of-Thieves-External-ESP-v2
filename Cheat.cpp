@@ -132,7 +132,7 @@ void cCheat::readData()
 			}
 		}
 		//SKELETON LORD
-		else if (name.find("BP_GiantSkeletonPawn") != std::string::npos)
+		else if (name.find("BP_GiantSkeleton") != std::string::npos)
 		{
 			if (!Vars.ESP.Skeletons.bActive)
 				continue;
@@ -174,7 +174,7 @@ void cCheat::readData()
 			}
 		}
 		//SKULL FORT
-		else if (name.find("BP_SkellyFort_SkullCloud_C") != std::string::npos)
+		else if (name.find("BP_SkellyFort_SkullCloud") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bFort)
 				continue;
@@ -202,7 +202,7 @@ void cCheat::readData()
 			}
 		}
 		//FLAMEHEART
-		else if (name.find("Signal_Flameheart") != std::string::npos)
+		else if (name.find("BP_GhostShips_Signal_Flameheart_NetProxy") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bFort)
 				continue;
@@ -216,7 +216,7 @@ void cCheat::readData()
 			}
 		}
 		//ASHEN LORD
-		else if (name.find("AshenLord_SkullCloud_C") != std::string::npos)
+		else if (name.find("BP_AshenLord_SkullCloud") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bFort)
 				continue;
@@ -230,7 +230,7 @@ void cCheat::readData()
 			}
 		}
 		//MAP TABLE
-		else if (name.find("MapTable_C") != std::string::npos)
+		else if (name.find("MapTable") != std::string::npos)
 		{
 			auto Table = *reinterpret_cast<AMapTable*>(&actors[i]);
 			//REAPERS CHEST
@@ -312,7 +312,7 @@ void cCheat::readData()
 			}
 		}
 		//PLAYERS
-		else if (name.find("BP_PlayerPirate_C") != std::string::npos)
+		else if (name.find("BP_PlayerPirate") != std::string::npos)
 		{
 			if (!Vars.ESP.Players.bActive)
 				continue;
@@ -373,7 +373,7 @@ void cCheat::readData()
 			}
 		}
 		//SLOOP
-		else if (name.find("BP_SmallShipTemplate_C") != std::string::npos || name.find("BP_SmallShipNetProxy") != std::string::npos)
+		else if (name.find("BP_SmallShipTemplate") != std::string::npos || name.find("BP_SmallShipNetProxy") != std::string::npos)
 		{
 			if (!Vars.ESP.Ships.bActive)
 				continue;
@@ -395,7 +395,7 @@ void cCheat::readData()
 			}
 		}
 		//BRIGANTINE
-		else if (name.find("BP_MediumShipTemplate_C") != std::string::npos || name.find("BP_MediumShipNetProxy") != std::string::npos)
+		else if (name.find("BP_MediumShipTemplate") != std::string::npos || name.find("BP_MediumShipNetProxy") != std::string::npos)
 		{
 			if (!Vars.ESP.Ships.bActive)
 				continue;
@@ -417,7 +417,7 @@ void cCheat::readData()
 			}
 		}
 		//GALLEON
-		else if (name.find("BP_LargeShipTemplate_C") != std::string::npos || name.find("BP_LargeShipNetProxy") != std::string::npos)
+		else if (name.find("BP_LargeShipTemplate") != std::string::npos || name.find("BP_LargeShipNetProxy") != std::string::npos)
 		{
 			if (!Vars.ESP.Ships.bActive)
 				continue;
@@ -475,7 +475,7 @@ void cCheat::readData()
 			}
 		}
 		//SHIPWRECK
-		else if (name.find("BP_Shipwreck_") != std::string::npos)
+		else if (name.find("BP_Shipwreck") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bShipWreck)
 				continue;
@@ -489,7 +489,7 @@ void cCheat::readData()
 			}
 		}
 		//MERMAID STATUES
-		else if (name.find("BP_SunkenCurseArtefact_") != std::string::npos)
+		else if (name.find("BP_SunkenCurseArtefact") != std::string::npos)
 		{
 			if (!Vars.ESP.Treasure.bMermaidStatues)
 				continue;
@@ -513,7 +513,7 @@ void cCheat::readData()
 			}
 		}
 		//ANIMALS
-		else if ((name.find("BP_Pig_") != std::string::npos && Vars.ESP.Animals.bPig) || (name.find("BP_Snake_") != std::string::npos && Vars.ESP.Animals.bSnake) || (name.find("BP_Chicken_") != std::string::npos && Vars.ESP.Animals.bChicken))
+		else if ((name.find("BP_Pig") != std::string::npos && Vars.ESP.Animals.bPig) || (name.find("BP_Snake") != std::string::npos && Vars.ESP.Animals.bSnake) || (name.find("BP_Chicken") != std::string::npos && Vars.ESP.Animals.bChicken))
 		{
 			if (!Vars.ESP.Animals.bActive)
 				continue;
@@ -568,7 +568,7 @@ void cCheat::readData()
 			}
 		}
 		//STORM
-		else if (name.find("BP_Storm_C") != std::string::npos)
+		else if (name.find("BP_Storm") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bStorm)
 				continue;
@@ -583,7 +583,7 @@ void cCheat::readData()
 			}
 		}
 		//MERMAID
-		else if (name.find("BP_Mermaid_C") != std::string::npos)
+		else if (name.find("BP_Mermaid") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bMermaid)
 				continue;
@@ -598,7 +598,7 @@ void cCheat::readData()
 			}
 		}
 		//ROWBOAT
-		else if (name.find("BP_RowboatRowingSeat_C") != std::string::npos)
+		else if (name.find("BP_RowboatRowingSeat") != std::string::npos)
 		{
 			if (!Vars.ESP.Ships.bRowboat)
 				continue;
@@ -613,7 +613,7 @@ void cCheat::readData()
 			}
 		}
 		//FOG
-		else if (name.find("BP_FogBank_C") != std::string::npos)
+		else if (name.find("BP_FogBank") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bFog)
 				continue;
@@ -643,7 +643,7 @@ void cCheat::readData()
 			}
 		}
 		//GHOST SHIP
-		else if (name.find("BP_AggressiveGhostShip_C") != std::string::npos)
+		else if (name.find("BP_AggressiveGhostShip") != std::string::npos)
 		{
 			if (!Vars.ESP.Ships.bActive)
 				continue;
@@ -661,7 +661,7 @@ void cCheat::readData()
 			}
 		}
 		//GHOST SHIP MINE
-		else if (name.find("BP_AggressiveGhostShip_Mine_C") != std::string::npos)
+		else if (name.find("BP_AggressiveGhostShip_Mine") != std::string::npos)
 		{
 			if (!Vars.ESP.Ships.bActive)
 				continue;
@@ -675,7 +675,7 @@ void cCheat::readData()
 			}
 		}
 		//GHOST SHIP REWARDS
-		else if (name.find("BP_GhostShipRewardMarker_C") != std::string::npos)
+		else if (name.find("BP_GhostShipRewardMarker") != std::string::npos)
 		{
 			if (!Vars.ESP.Treasure.bActive)
 				continue;
