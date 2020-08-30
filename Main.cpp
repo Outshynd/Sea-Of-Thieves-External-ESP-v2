@@ -83,19 +83,20 @@ int WinMain(HINSTANCE hInstance,
 			break;
 		if (toggleF1) {
 			Vars.ESP.World.bActive = !Vars.ESP.World.bActive;
-			Vars.ESP.World.bShipWreck = !Vars.ESP.World.bShipWreck;
-			Vars.ESP.World.bMermaid = !Vars.ESP.World.bMermaid;
+			Vars.ESP.World.bFog = !Vars.ESP.World.bFog;
 			Vars.ESP.World.bFort = !Vars.ESP.World.bFort;
-			Vars.ESP.World.bReapersChest = !Vars.ESP.World.bReapersChest;
 			Vars.ESP.World.bMapPins = !Vars.ESP.World.bMapPins;
+			Vars.ESP.World.bMermaid = !Vars.ESP.World.bMermaid;
+			Vars.ESP.World.bShipWreck = !Vars.ESP.World.bShipWreck;
+			Vars.ESP.World.bStorm = !Vars.ESP.World.bStorm;
 		}
 		if (toggleF2) {
 			Menu->menuOpen = !Menu->menuOpen;
 			Vars.ESP.Players.bActive = !Vars.ESP.Players.bActive;
-			Vars.ESP.Players.bWeapon = !Vars.ESP.Players.bWeapon;
-			Vars.ESP.Players.bName = !Vars.ESP.Players.bName;
 			Vars.ESP.Players.bHealth = !Vars.ESP.Players.bHealth;
+			Vars.ESP.Players.bName = !Vars.ESP.Players.bName;
 			Vars.ESP.Players.bTeam = !Vars.ESP.Players.bTeam;
+			Vars.ESP.Players.bWeapon = !Vars.ESP.Players.bWeapon;
 		}
 		if (toggleF3) {
 			Vars.ESP.Skeletons.bActive = !Vars.ESP.Skeletons.bActive;
@@ -103,15 +104,19 @@ int WinMain(HINSTANCE hInstance,
 		}
 		if (toggleF4) {
 			Vars.ESP.Ships.bActive = !Vars.ESP.Ships.bActive;
+			Vars.ESP.Ships.bRowboat = !Vars.ESP.Ships.bRowboat;
 		}
 		if (toggleF5) {
 			Vars.ESP.Treasure.bActive = !Vars.ESP.Treasure.bActive;
+			Vars.ESP.Treasure.bGloriousSeaDogChest = !Vars.ESP.Treasure.bGloriousSeaDogChest;
+			Vars.ESP.Treasure.bMermaidStatues = !Vars.ESP.Treasure.bMermaidStatues;
+			Vars.ESP.Treasure.bReapersChest = !Vars.ESP.Treasure.bReapersChest;
 		}
 		if (toggleF6) {
 			Vars.ESP.Animals.bActive = !Vars.ESP.Animals.bActive;
-			Vars.ESP.Animals.bSnake = !Vars.ESP.Animals.bSnake;
 			Vars.ESP.Animals.bChicken = !Vars.ESP.Animals.bChicken;
 			Vars.ESP.Animals.bPig = !Vars.ESP.Animals.bPig;
+			Vars.ESP.Animals.bSnake = !Vars.ESP.Animals.bSnake;
 		}
 		if (GetAsyncKeyState(VK_END))
 			break;
