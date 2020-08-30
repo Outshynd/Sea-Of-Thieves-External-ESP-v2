@@ -29,7 +29,7 @@ KeyToggle toggleF5(VK_F5);
 KeyToggle toggleF6(VK_F6);
 clock_t deltaTime = 0;
 unsigned int frames = 0;
-int WINAPI WinMain(HINSTANCE hInstance,
+int WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
