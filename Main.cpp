@@ -120,7 +120,7 @@ int WinMain(HINSTANCE hInstance,
 			Vars.ESP.Animals.bSnake = !Vars.ESP.Animals.bSnake;
 		}
 		if (toggleF7) {
-			Vars.ESP.Players.bHeadshot = !Vars.ESP.Players.bHeadshot;
+			Vars.ESP.bHeadshot = !Vars.ESP.bHeadshot;
 		}
 		if (GetAsyncKeyState(VK_END))
 			break;

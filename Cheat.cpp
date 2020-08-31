@@ -12,41 +12,20 @@ std::string cCheat::getNameFromIDmem(int ID) {
 		return std::string("");
 	}
 }
-void AimAtPos(float x, float y)
+float get_fov(float x, float y)
 {
-	float ScreenCenterX = (Process->Size[0] / 2);
-	float ScreenCenterY = (Process->Size[1] / 2);
-	float TargetX = 0;
-	float TargetY = 0;
-	if (x != 0)
-	{
-		if (x > ScreenCenterX)
-		{
-			TargetX = -(ScreenCenterX - x);
-			if (TargetX + ScreenCenterX > ScreenCenterX * 2) TargetX = 0;
-		}
-		if (x < ScreenCenterX)
-		{
-			TargetX = x - ScreenCenterX;
-			if (TargetX + ScreenCenterX < 0) TargetX = 0;
-		}
-	}
-	if (y != 0)
-	{
-		if (y > ScreenCenterY)
-		{
-			TargetY = -(ScreenCenterY - y);
-			if (TargetY + ScreenCenterY > ScreenCenterY * 2) TargetY = 0;
-		}
-		if (y < ScreenCenterY)
-		{
-			TargetY = y - ScreenCenterY;
-			if (TargetY + ScreenCenterY < 0) TargetY = 0;
-		}
-	}
-	TargetX /= 2;
-	TargetY /= 2;
-	mouse_event(MOUSEEVENTF_MOVE, TargetX, TargetY, 0, 0);
+	return sqrtf(powf(x, 2.0f) + powf(y, 2.0f));
+}
+void gather_aim_points(Vector3 pos, std::vector<Vector2>* aim_points)
+{
+	Vector2 aim_pos;
+	Vector3 headPos = Vector3(pos.x, pos.y, pos.z + 70);
+	Vector3 chestPos = Vector3(pos.x, pos.y, pos.z + 35);
+	if (Vars.ESP.bHeadshot)
+		Misc->WorldToScreen(headPos, &aim_pos);
+	else
+		Misc->WorldToScreen(chestPos, &aim_pos);
+	aim_points->push_back(aim_pos);
 }
 void cCheat::readData()
 {
@@ -124,6 +103,7 @@ void cCheat::readData()
 	auto actors = level.GetActors();
 	if (!actors.IsValid())
 		return;
+	std::vector<Vector2> aim_points;
 	for (int i = 0; i < actors.Length(); ++i)
 	{
 		auto actor = *reinterpret_cast<AActor*>(&actors[i]);
@@ -158,6 +138,7 @@ void cCheat::readData()
 					}
 				}
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//SKELETON LORD
 		else if (name.find("BP_GiantSkeletonPawnBase") != std::string::npos)
@@ -186,6 +167,7 @@ void cCheat::readData()
 					}
 				}
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//SHIP CLOUD
 		else if (name.find("BP_SkellyShip_ShipCloud") != std::string::npos)
@@ -363,12 +345,6 @@ void cCheat::readData()
 					int hi = (Screen.y - ScreenTop.y) * 2;
 					int wi = hi * 0.5;
 					auto pirateName = Misc->wstringToString(actor.GetPlayerState().GetName());
-					if (GetAsyncKeyState(VK_CAPITAL))
-						if (ScreenTop.x > 850 && ScreenTop.x < 1050)
-							if (Vars.ESP.Players.bHeadshot)
-								AimAtPos(ScreenTop.x, ScreenTop.y + hi * .05);
-							else
-								AimAtPos(ScreenTop.x, ScreenTop.y + hi * .3);
 					for (int pirates = 0; pirates < 24; ++pirates)
 					{
 						if (SOT->Pirates[pirates].name == "")
@@ -405,6 +381,7 @@ void cCheat::readData()
 					}
 				}
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//SLOOP
 		else if (name.find("BP_SmallShipTemplate") != std::string::npos || name.find("BP_SmallShipNetProxy") != std::string::npos)
@@ -568,7 +545,9 @@ void cCheat::readData()
 			{
 				DrawString(std::wstring(Fauna.GetName() + L" " + std::to_wstring((int)distance) + L"m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
+			gather_aim_points(pos, &aim_points);
 		}
+		//TREASURE
 		else if (name.find("Proxy") != std::string::npos)
 		{
 			if (!Vars.ESP.Treasure.bActive)
@@ -722,5 +701,34 @@ void cCheat::readData()
 				DrawString(std::string("Ghost Ship Rewards " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
 		}
+	}
+	//AIMBOT
+	float distance = FLT_MAX;
+	float tempdist = FLT_MAX;
+	float fov = 360.f;
+	Vector2 aim_pos = Vector2(0, 0);
+	float ScreenCenterX = Process->Size[0] / 2.0f;
+	float ScreenCenterY = Process->Size[1] / 2.0f;
+	if (!aim_points.empty())
+	{
+		for (auto it = std::begin(aim_points); it != std::end(aim_points); ++it)
+		{
+			Vector2 current_aim = *it;
+			float tempdist = get_fov(current_aim.x - ScreenCenterX, current_aim.y - ScreenCenterY);
+			if (tempdist > fov)
+			{
+				continue;
+			}
+			if (tempdist < distance)
+			{
+				distance = tempdist;
+				aim_pos = current_aim;
+			}
+		}
+	}
+	if (GetAsyncKeyState(VK_CAPITAL) && aim_pos.x != 0 && aim_pos.y != 0)
+	{
+		int x = aim_pos.x - ScreenCenterX, y = aim_pos.y - ScreenCenterY;
+		mouse_event(MOUSEEVENTF_MOVE, x / 2, y / 2, 0, 0);
 	}
 }

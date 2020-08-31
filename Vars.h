@@ -4,13 +4,14 @@ public:
 	bool GUI = true;
 	struct ESP
 	{
+		bool bHeadshot;
 		struct World
 		{
 			bool bActive, bFog, bFort, bMapPins, bMermaid, bShipWreck, bStorm;
 		}World;
 		struct Players
 		{
-			bool bActive, bHeadshot, bHealth, bName, bTeam, bWeapon;
+			bool bActive, bHealth, bName, bTeam, bWeapon;
 		}Players;
 		struct Skeletons
 		{
