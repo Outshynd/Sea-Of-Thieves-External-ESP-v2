@@ -19,12 +19,8 @@ float get_fov(float x, float y)
 void gather_aim_points(Vector3 pos, std::vector<Vector2>* aim_points)
 {
 	Vector2 aim_pos;
-	Vector3 headPos = Vector3(pos.x, pos.y, pos.z + 70);
-	Vector3 chestPos = Vector3(pos.x, pos.y, pos.z + 35);
-	if (Vars.ESP.bHeadshot)
-		Misc->WorldToScreen(headPos, &aim_pos);
-	else
-		Misc->WorldToScreen(chestPos, &aim_pos);
+	Vector3 chestPos = Vector3(pos.x, pos.y, pos.z + 40);
+	Misc->WorldToScreen(chestPos, &aim_pos);
 	aim_points->push_back(aim_pos);
 }
 void cCheat::readData()
@@ -729,6 +725,6 @@ void cCheat::readData()
 	if (GetAsyncKeyState(VK_CAPITAL) && aim_pos.x != 0 && aim_pos.y != 0)
 	{
 		int x = aim_pos.x - ScreenCenterX, y = aim_pos.y - ScreenCenterY;
-		mouse_event(MOUSEEVENTF_MOVE, x / 2, y / 2, 0, 0);
+		mouse_event(MOUSEEVENTF_MOVE, x / 3, y / 3, 0, 0);
 	}
 }

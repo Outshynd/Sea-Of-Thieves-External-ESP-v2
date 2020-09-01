@@ -4,7 +4,6 @@ public:
 	bool GUI = true;
 	struct ESP
 	{
-		bool bHeadshot;
 		struct World
 		{
 			bool bActive, bFog, bFort, bMapPins, bMermaid, bShipWreck, bStorm;
