@@ -604,7 +604,7 @@ void cCheat::readData()
 			}
 		}
 		//AMMO CRATE
-		else if (name.find("AmmoChest") != std::string::npos)
+		else if (name.find("BP_AmmoChest") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bAmmoCrate)
 				continue;
@@ -619,7 +619,7 @@ void cCheat::readData()
 			}
 		}
 		//STORAGE CRATE
-		else if (name.find("StorageContainer") != std::string::npos)
+		else if (name.find("BP_MerchantCrate_AnyItemCrate") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bStorageCrate)
 				continue;
@@ -634,7 +634,7 @@ void cCheat::readData()
 			}
 		}
 		//BUOYANT STORAGE BARREL
-		else if (name.find("BP_BuoyantStorageBarrel") != std::string::npos)
+		else if (name.find("BP_BuoyantStorageBarrel_LockedToWater") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bBarrel)
 				continue;
