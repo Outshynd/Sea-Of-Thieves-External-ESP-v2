@@ -119,7 +119,7 @@ void cCheat::readData()
 			{
 				Vector3 headPos = Vector3(pos.x, pos.y, pos.z + 75);
 				Vector2 ScreenTop;
-				Color boxColor = { 125,0,255,0 };
+				Color boxColor = { 125,0,255 };
 				if (Misc->WorldToScreen(headPos, &ScreenTop))
 				{
 					int hi = (Screen.y - ScreenTop.y) * 2;
@@ -148,7 +148,7 @@ void cCheat::readData()
 			{
 				Vector3 headPos = Vector3(pos.x, pos.y, pos.z + 75);
 				Vector2 ScreenTop;
-				Color boxColor = { 125,0,255,0 };
+				Color boxColor = { 125,0,255 };
 				if (Misc->WorldToScreen(headPos, &ScreenTop))
 				{
 					int hi = (Screen.y - ScreenTop.y) * 2;
@@ -172,7 +172,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -186,7 +186,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -200,7 +200,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -214,7 +214,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -228,7 +228,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -248,7 +248,7 @@ void cCheat::readData()
 					{
 						auto Chest = Chests[p];
 						Vector2 Screen;
-						Color color = { 255,255,255,0 };
+						Color color = { 255,255,255 };
 						int dist = (int)(SOT->localPlayer.position.DistTo(Chest) / 100.f);
 						if (Misc->WorldToScreen(Chest, &Screen))
 						{
@@ -261,7 +261,7 @@ void cCheat::readData()
 			if (Vars.ESP.World.bMapPins) {
 				auto pins = Table.GetMapPins();
 				if (pins.IsValid()) {
-					Color color = { 255,255,255,0 };
+					Color color = { 255,255,255 };
 					for (int p = 0; p < pins.Length(); ++p)
 					{
 						auto pin = pins[p];
@@ -334,7 +334,7 @@ void cCheat::readData()
 			{
 				Vector3 headPos = Vector3(pos.x, pos.y, pos.z + 75);
 				Vector2 ScreenTop;
-				Color boxColor = { 255,0,0,0 };
+				Color boxColor = { 255,0,0 };
 				bool bTeammate = false;
 				if (Misc->WorldToScreen(headPos, &ScreenTop))
 				{
@@ -350,7 +350,7 @@ void cCheat::readData()
 							SOT->Pirates[pirates].distance = distance;
 							if (SOT->Pirates[pirates].crewID == SOT->localPlayer.crewID)
 							{
-								boxColor = Color{ 0,255,0,0 };
+								boxColor = Color{ 0,255,0 };
 								bTeammate = true;
 							}
 						}
@@ -390,10 +390,10 @@ void cCheat::readData()
 			if (name.find("NetProxy") != std::string::npos)
 				if (Ship.GetOwningActor())
 					continue;
-			Color color = { 255,0,0,0 };
+			Color color = { 255,0,0 };
 			if (SOT->localPlayer.crewID == Ship.GetCrewOwnershipComponent().GetCrewId())
 			{
-				color = { 0,255,0,0 };
+				color = { 0,255,0 };
 			}
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 1500), &Screen))
@@ -412,10 +412,10 @@ void cCheat::readData()
 			if (name.find("NetProxy") != std::string::npos)
 				if (Ship.GetOwningActor())
 					continue;
-			Color color = { 255,0,0,0 };
+			Color color = { 255,0,0 };
 			if (SOT->localPlayer.crewID == Ship.GetCrewOwnershipComponent().GetCrewId())
 			{
-				color = { 0,255,0,0 };
+				color = { 0,255,0 };
 			}
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 1750), &Screen))
@@ -434,10 +434,10 @@ void cCheat::readData()
 			if (name.find("NetProxy") != std::string::npos)
 				if (Ship.GetOwningActor())
 					continue;
-			Color color = { 255,0,0,0 };
+			Color color = { 255,0,0 };
 			if (SOT->localPlayer.crewID == Ship.GetCrewOwnershipComponent().GetCrewId())
 			{
-				color = { 0,255,0,0 };
+				color = { 0,255,0 };
 			}
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 2000), &Screen))
@@ -456,7 +456,7 @@ void cCheat::readData()
 			if (name.find("NetProxy") != std::string::npos)
 				if (Ship.GetOwningActor())
 					continue;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 1500), &Screen))
 			{
@@ -474,7 +474,7 @@ void cCheat::readData()
 			if (name.find("NetProxy") != std::string::npos)
 				if (Ship.GetOwningActor())
 					continue;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 2000), &Screen))
 			{
@@ -488,7 +488,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, 1000), &Screen))
 			{
@@ -527,15 +527,15 @@ void cCheat::readData()
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 			auto Fauna = *reinterpret_cast<AFauna*>(&actors[i]);
-			Color color = Color{ 255,255,255,0 };
+			Color color = Color{ 255,255,255 };
 			if (name.find("Common") != std::wstring::npos)
-				color = Color{ 255,255,255,0 };
+				color = Color{ 255,255,255 };
 			else if (name.find("Rare") != std::wstring::npos)
-				color = Color{ 182,97,70,0 };
+				color = Color{ 182,97,70 };
 			else if (name.find("Mythical") != std::wstring::npos)
-				color = Color{ 136,119,151,0 };
+				color = Color{ 136,119,151 };
 			else if (name.find("Legendary") != std::wstring::npos)
-				color = Color{ 100,185,185,0 };
+				color = Color{ 100,185,185 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -550,7 +550,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z), &Screen))
 			{
@@ -558,13 +558,27 @@ void cCheat::readData()
 			}
 			gather_aim_points(pos, &aim_points);
 		}
+		//MEGALODON
+		else if (name.find("BP_TinyShark") != std::string::npos)
+		{
+			if (!Vars.ESP.Animals.bMegalodon)
+				continue;
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { 255,255,255 };
+			Vector2 Screen;
+			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z), &Screen))
+			{
+				DrawString(std::string("Megalodon " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
+			}
+		}
 		//TREASURE
 		else if (name.find("Proxy") != std::string::npos)
 		{
 			if (!Vars.ESP.Treasure.bActive)
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
-			pos.z += 20;
+			pos.z += 20.0f;
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 			auto treasure = *reinterpret_cast<AItemProxy*>(&actors[i]);
 			int booty = treasure.GetBootyItemInfo().GetBootyType();
@@ -574,19 +588,64 @@ void cCheat::readData()
 			if (skip)
 				continue;
 			auto rarity = getNameFromIDmem(treasure.GetBootyItemInfo().GetRareityId());
-			Color color = Color{ 255,255,255,0 };
+			Color color = Color{ 255,255,255 };
 			if (name.find("Common") != std::wstring::npos)
-				color = Color{ 255,255,255,0 };
+				color = Color{ 255,255,255 };
 			else if (name.find("Rare") != std::wstring::npos)
-				color = Color{ 182,97,70,0 };
+				color = Color{ 182,97,70 };
 			else if (name.find("Mythical") != std::wstring::npos)
-				color = Color{ 136,119,151,0 };
+				color = Color{ 136,119,151 };
 			else if (name.find("Legendary") != std::wstring::npos)
-				color = Color{ 100,185,185,0 };
+				color = Color{ 100,185,185 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
 				DrawString(std::wstring(treasure.GetBootyItemInfo().GetItemDesc().GetName() + L" " + std::to_wstring((int)distance) + L"m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
+			}
+		}
+		//AMMO CRATE
+		else if (name.find("AmmoChest") != std::string::npos)
+		{
+			if (!Vars.ESP.World.bAmmoCrate)
+				continue;
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 20.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { 255,255,255 };
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString(std::string("Ammo Crate " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
+			}
+		}
+		//STORAGE CRATE
+		else if (name.find("StorageContainer") != std::string::npos)
+		{
+			if (!Vars.ESP.World.bStorageCrate)
+				continue;
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 20.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { 255,255,255 };
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString(std::string("Storage Crate " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
+			}
+		}
+		//BUOYANT STORAGE BARREL
+		else if (name.find("BP_BuoyantStorageBarrel") != std::string::npos)
+		{
+			if (!Vars.ESP.World.bBarrel)
+				continue;
+			auto pos = actor.GetRootComponent().GetPosition();
+			pos.z += 20.0f;
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { 255,255,255 };
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString(std::string("Barrel " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
 		}
 		//STORM
@@ -655,9 +714,9 @@ void cCheat::readData()
 			if (!Vars.ESP.Treasure.bGloriousSeaDogChest)
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
-			pos.z += 150;
+			pos.z += 150.0f;
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = Color{ 255,215,0,0 };
+			Color color = Color{ 255,215,0 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -675,7 +734,7 @@ void cCheat::readData()
 			if (name.find("NetProxy") != std::string::npos)
 				if (Ship.GetOwningActor())
 					continue;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z + 2000), &Screen))
 			{
@@ -689,7 +748,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -703,7 +762,7 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			Color color = { 255,255,255,0 };
+			Color color = { 255,255,255 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{

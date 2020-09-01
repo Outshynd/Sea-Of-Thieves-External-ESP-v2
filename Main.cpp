@@ -83,11 +83,14 @@ int WinMain(HINSTANCE hInstance,
 			break;
 		if (toggleF1) {
 			Vars.ESP.World.bActive = !Vars.ESP.World.bActive;
+			Vars.ESP.World.bAmmoCrate = !Vars.ESP.World.bAmmoCrate;
+			Vars.ESP.World.bBarrel = !Vars.ESP.World.bBarrel;
 			Vars.ESP.World.bFog = !Vars.ESP.World.bFog;
 			Vars.ESP.World.bFort = !Vars.ESP.World.bFort;
 			Vars.ESP.World.bMapPins = !Vars.ESP.World.bMapPins;
 			Vars.ESP.World.bMermaid = !Vars.ESP.World.bMermaid;
 			Vars.ESP.World.bShipWreck = !Vars.ESP.World.bShipWreck;
+			Vars.ESP.World.bStorageCrate = !Vars.ESP.World.bStorageCrate;
 			Vars.ESP.World.bStorm = !Vars.ESP.World.bStorm;
 		}
 		if (toggleF2) {
@@ -115,6 +118,7 @@ int WinMain(HINSTANCE hInstance,
 		if (toggleF6) {
 			Vars.ESP.Animals.bActive = !Vars.ESP.Animals.bActive;
 			Vars.ESP.Animals.bChicken = !Vars.ESP.Animals.bChicken;
+			Vars.ESP.Animals.bMegalodon = !Vars.ESP.Animals.bMegalodon;
 			Vars.ESP.Animals.bPig = !Vars.ESP.Animals.bPig;
 			Vars.ESP.Animals.bShark = !Vars.ESP.Animals.bShark;
 			Vars.ESP.Animals.bSnake = !Vars.ESP.Animals.bSnake;

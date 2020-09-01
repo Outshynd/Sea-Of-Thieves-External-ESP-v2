@@ -6,7 +6,7 @@ public:
 	{
 		struct World
 		{
-			bool bActive, bFog, bFort, bMapPins, bMermaid, bShipWreck, bStorm;
+			bool bActive, bAmmoCrate, bBarrel, bFog, bFort, bMapPins, bMermaid, bShipWreck, bStorageCrate, bStorm;
 		}World;
 		struct Players
 		{
@@ -26,7 +26,7 @@ public:
 		}Treasure;
 		struct Animals
 		{
-			bool bActive, bChicken, bPig, bShark, bSnake;
+			bool bActive, bChicken, bMegalodon, bPig, bShark, bSnake;
 		}Animals;
 	}ESP;
 };
