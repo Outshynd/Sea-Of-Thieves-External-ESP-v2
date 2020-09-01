@@ -571,6 +571,7 @@ void cCheat::readData()
 			{
 				DrawString(std::string("Megalodon " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//TREASURE
 		else if (name.find("Proxy") != std::string::npos)
