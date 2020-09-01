@@ -116,6 +116,7 @@ int WinMain(HINSTANCE hInstance,
 			Vars.ESP.Animals.bActive = !Vars.ESP.Animals.bActive;
 			Vars.ESP.Animals.bChicken = !Vars.ESP.Animals.bChicken;
 			Vars.ESP.Animals.bPig = !Vars.ESP.Animals.bPig;
+			Vars.ESP.Animals.bShark = !Vars.ESP.Animals.bShark;
 			Vars.ESP.Animals.bSnake = !Vars.ESP.Animals.bSnake;
 		}
 		if (GetAsyncKeyState(VK_END))

@@ -108,7 +108,7 @@ void cCheat::readData()
 		auto id = actor.GetID();
 		auto name = getNameFromIDmem(id);
 		//SKELETON
-		if (name.find("BP_Skeleton") != std::string::npos && name.find("Pawn") != std::string::npos)
+		if (name.find("BP_SkeletonPawnBase") != std::string::npos)
 		{
 			if (!Vars.ESP.Skeletons.bActive)
 				continue;
@@ -208,7 +208,7 @@ void cCheat::readData()
 			}
 		}
 		//FLAMEHEART
-		else if (name.find("BP_GhostShips_Signal_Flameheart_NetProxy") != std::string::npos)
+		else if (name.find("BP_GhostShips_Signal_Flameheart") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bFort)
 				continue;
@@ -258,7 +258,7 @@ void cCheat::readData()
 				}
 			}
 			//MAP PINS
-			else if (Vars.ESP.World.bMapPins) {
+			if (Vars.ESP.World.bMapPins) {
 				auto pins = Table.GetMapPins();
 				if (pins.IsValid()) {
 					Color color = { 255,255,255,0 };
@@ -543,6 +543,20 @@ void cCheat::readData()
 			}
 			gather_aim_points(pos, &aim_points);
 		}
+		//SHARK
+		else if (name.find("BP_Shark") != std::string::npos)
+		{
+			if (!Vars.ESP.Animals.bShark)
+				continue;
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Vector2 Screen;
+			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z), &Screen))
+			{
+				DrawString(std::string("Shark " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 255,255,255 }, true, "RobotoS");
+			}
+			gather_aim_points(pos, &aim_points);
+		}
 		//TREASURE
 		else if (name.find("Proxy") != std::string::npos)
 		{
@@ -568,8 +582,6 @@ void cCheat::readData()
 				color = Color{ 136,119,151,0 };
 			else if (name.find("Legendary") != std::wstring::npos)
 				color = Color{ 100,185,185,0 };
-			else if (rarity.find("Fort") != std::string::npos || rarity.find("Stronghold") != std::string::npos || rarity.find("PirateLegend") != std::string::npos || rarity.find("Drunken") != std::string::npos || rarity.find("Sorrow") != std::string::npos || rarity.find("AIShip") != std::string::npos)
-				color = Color{ 255,215,0,0 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -592,7 +604,7 @@ void cCheat::readData()
 			}
 		}
 		//MERMAID
-		else if (name.find("BP_Mermaid") != std::string::npos)
+		else if (name.find("BP_Mermaid_") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bMermaid)
 				continue;

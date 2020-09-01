@@ -26,7 +26,7 @@ public:
 		}Treasure;
 		struct Animals
 		{
-			bool bActive, bChicken, bPig, bSnake;
+			bool bActive, bChicken, bPig, bShark, bSnake;
 		}Animals;
 	}ESP;
 };
