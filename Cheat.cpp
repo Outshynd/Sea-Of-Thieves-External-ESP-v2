@@ -482,7 +482,7 @@ void cCheat::readData()
 			}
 		}
 		//SHIPWRECK
-		else if (name.find("BP_Shipwreck") != std::string::npos)
+		else if (name.find("BP_Shipwreck_") != std::string::npos)
 		{
 			if (!Vars.ESP.World.bShipWreck)
 				continue;
@@ -507,15 +507,15 @@ void cCheat::readData()
 			{
 				if (name.find("Ruby") != std::string::npos)
 				{
-					DrawString(std::string("Ruby Statue " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 255,0,0 }, true, "RobotoS");
+					DrawString(std::string("Ruby Statue " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 255,0,0,0 }, true, "RobotoS");
 				}
 				else if (name.find("Emerald") != std::string::npos)
 				{
-					DrawString(std::string("Emerald Statue " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 0,255,0 }, true, "RobotoS");
+					DrawString(std::string("Emerald Statue " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 0,255,0,0 }, true, "RobotoS");
 				}
 				else if (name.find("Sapphire") != std::string::npos)
 				{
-					DrawString(std::string("Sapphire Statue " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 0,0,255 }, true, "RobotoS");
+					DrawString(std::string("Sapphire Statue " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 0,0,255,0 }, true, "RobotoS");
 				}
 			}
 		}
@@ -550,10 +550,11 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { 255,255,255,0 };
 			Vector2 Screen;
 			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z), &Screen))
 			{
-				DrawString(std::string("Shark " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 255,255,255 }, true, "RobotoS");
+				DrawString(std::string("Shark " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
 			gather_aim_points(pos, &aim_points);
 		}
