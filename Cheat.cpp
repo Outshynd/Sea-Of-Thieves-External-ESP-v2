@@ -368,12 +368,9 @@ void cCheat::readData()
 		{
 			if (!Vars.ESP.Players.bActive)
 				continue;
-			bool revivable = false;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
 			int health = actor.GetHealthComponent().GetHealth();
-			if (health <= 0)
-				revivable = true;
 			auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
@@ -384,8 +381,6 @@ void cCheat::readData()
 				bool bTeammate = false;
 				if (Misc->WorldToScreen(headPos, &ScreenTop))
 				{
-					int hi = (Screen.y - ScreenTop.y) * 2;
-					int wi = hi * 0.5;
 					auto pirateName = Misc->wstringToString(actor.GetPlayerState().GetName());
 					for (int pirates = 0; pirates < 24; ++pirates)
 					{
@@ -403,6 +398,8 @@ void cCheat::readData()
 					}
 					if (!Vars.ESP.Players.bTeam && bTeammate)
 						continue;
+					int hi = (Screen.y - ScreenTop.y) * 2;
+					int wi = hi * 0.5;
 					DrawBox(ScreenTop.x - wi / 2, ScreenTop.y, wi, hi, boxColor);
 					if (Vars.ESP.Players.bName)
 					{
@@ -411,10 +408,7 @@ void cCheat::readData()
 					if (Vars.ESP.Players.bWeapon)
 					{
 						if (ItemName.length() >= 4 && ItemName.length() < 32)
-							if (revivable == false)
-								DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
-							else
-								DrawString("None", ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
+							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
 					}
 					if (Vars.ESP.Players.bHealth)
 					{
@@ -441,7 +435,7 @@ void cCheat::readData()
 				if (Misc->WorldToScreen(headPos, &ScreenTop))
 				{
 					int hi = (Screen.y - ScreenTop.y) * 2;
-					int wi = hi * 0.50;
+					int wi = hi * 0.5;
 					DrawBox(ScreenTop.x - wi / 2, ScreenTop.y, wi, hi, boxColor);
 					DrawString(std::string("Skeleton " + std::to_string((int)distance) + "m").c_str(), ScreenTop.x, ScreenTop.y - 14, Color{ 255,255,255 }, true, "RobotoS");
 					if (Vars.ESP.Skeletons.bWeapon)
@@ -470,7 +464,7 @@ void cCheat::readData()
 				if (Misc->WorldToScreen(headPos, &ScreenTop))
 				{
 					int hi = (Screen.y - ScreenTop.y) * 2;
-					int wi = hi * 0.50;
+					int wi = hi * 0.5;
 					DrawBox(ScreenTop.x - wi / 2, ScreenTop.y, wi, hi, boxColor);
 					DrawString(std::string("Skeleton Lord " + std::to_string((int)distance) + "m").c_str(), ScreenTop.x, ScreenTop.y - 14, Color{ 255,255,255 }, true, "RobotoS");
 					if (Vars.ESP.Skeletons.bWeapon)
@@ -740,6 +734,21 @@ void cCheat::readData()
 			}
 			gather_aim_points(pos, &aim_points);
 		}
+		//KRAKEN
+		else if (name.find("BP_KrakenAnimatedTentacle") != std::string::npos)
+		{
+			if (!Vars.ESP.Animals.bKraken)
+				continue;
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { 255,255,255 };
+			Vector2 Screen;
+			if (Misc->WorldToScreen(Vector3(pos.x, pos.y, pos.z), &Screen))
+			{
+				DrawString(std::string("Kraken Tentacle " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
+			}
+			gather_aim_points(pos, &aim_points);
+		}
 		//SHARK
 		else if (name.find("BP_Shark") != std::string::npos)
 		{
@@ -770,6 +779,13 @@ void cCheat::readData()
 			}
 			gather_aim_points(pos, &aim_points);
 		}
+		//TODO
+		/*
+		* 1. Islands
+		* 2. Island Barrels
+		* 3. Island Xs
+		* 4. Harpoon Aimbot
+		*/
 	}
 	//AIMBOT
 	float distance = FLT_MAX;

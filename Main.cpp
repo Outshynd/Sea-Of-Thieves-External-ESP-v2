@@ -118,6 +118,7 @@ int WinMain(HINSTANCE hInstance,
 		if (toggleF6) {
 			Vars.ESP.Animals.bActive = !Vars.ESP.Animals.bActive;
 			Vars.ESP.Animals.bChicken = !Vars.ESP.Animals.bChicken;
+			Vars.ESP.Animals.bKraken = !Vars.ESP.Animals.bKraken;
 			Vars.ESP.Animals.bMegalodon = !Vars.ESP.Animals.bMegalodon;
 			Vars.ESP.Animals.bPig = !Vars.ESP.Animals.bPig;
 			Vars.ESP.Animals.bShark = !Vars.ESP.Animals.bShark;
