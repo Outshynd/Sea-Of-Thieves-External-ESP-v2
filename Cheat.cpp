@@ -785,11 +785,13 @@ void cCheat::readData()
 			}
 			gather_aim_points(pos, &aim_points);
 		}
-		//TODO
 		/*
+		* TODO
 		* 1. Islands
 		* 2. Island Barrels
 		* 3. Island Xs
+		* 4. Ritual Skull
+		* 5. Storage Crate - some show, some don't
 		*/
 	}
 	//AIMBOT
