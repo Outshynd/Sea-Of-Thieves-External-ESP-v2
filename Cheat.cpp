@@ -121,6 +121,7 @@ void cCheat::readData()
 			{
 				DrawString(std::string("Ammo Crate " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//BUOYANT STORAGE BARREL
 		else if (name.find("BP_BuoyantStorageBarrel_LockedToWater") != std::string::npos)
@@ -136,6 +137,7 @@ void cCheat::readData()
 			{
 				DrawString(std::string("Barrel " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//FOG
 		else if (name.find("BP_FogBank") != std::string::npos)
@@ -305,6 +307,7 @@ void cCheat::readData()
 			{
 				DrawString(std::string("Storage Crate " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//STORM
 		else if (name.find("BP_Storm") != std::string::npos)
@@ -670,6 +673,7 @@ void cCheat::readData()
 			{
 				DrawString(std::wstring(treasure.GetBootyItemInfo().GetItemDesc().GetName() + L" " + std::to_wstring((int)distance) + L"m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//GLORIOUS SEA DOG CHEST
 		else if (name.find("BP_RomeBeacon") != std::string::npos)
@@ -685,6 +689,7 @@ void cCheat::readData()
 			{
 				DrawString(std::string("Glorious Sea Dog Chest " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//MERMAID STATUES
 		else if (name.find("BP_SunkenCurseArtefact") != std::string::npos)
@@ -709,6 +714,7 @@ void cCheat::readData()
 					DrawString(std::string("Sapphire Statue " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, Color{ 0,0,255,0 }, true, "RobotoS");
 				}
 			}
+			gather_aim_points(pos, &aim_points);
 		}
 		//ANIMALS
 		else if ((name.find("BP_Pig") != std::string::npos && Vars.ESP.Animals.bPig) || (name.find("BP_Snake") != std::string::npos && Vars.ESP.Animals.bSnake) || (name.find("BP_Chicken") != std::string::npos && Vars.ESP.Animals.bChicken))
@@ -784,7 +790,6 @@ void cCheat::readData()
 		* 1. Islands
 		* 2. Island Barrels
 		* 3. Island Xs
-		* 4. Harpoon Aimbot
 		*/
 	}
 	//AIMBOT
