@@ -31,6 +31,10 @@ void cDrawing::Draw()
 			String(std::string("F6: Animals").c_str(), 510, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoS");
 		else
 			String(std::string("F6: Animals").c_str(), 510, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoS");
+		if (Vars.ESP.bDebug)
+			String(std::string("F7: Debug").c_str(), 610, screen_top, D3DCOLOR_XRGB(0, 255, 0), false, "RobotoS");
+		else
+			String(std::string("F7: Debug").c_str(), 610, screen_top, D3DCOLOR_XRGB(255, 0, 0), false, "RobotoS");
 	}
 	Line(Process->Size[0] / 2 - 5, Process->Size[1] / 2, Process->Size[0] / 2 + 5, Process->Size[1] / 2, D3DCOLOR_XRGB(0, 0, 255));
     Line(Process->Size[0] / 2, Process->Size[1] / 2 - 5, Process->Size[0] / 2, Process->Size[1] / 2 + 5, D3DCOLOR_XRGB(0, 0, 255));
