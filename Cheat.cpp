@@ -373,8 +373,6 @@ void cCheat::readData()
 				continue;
 			auto pos = actor.GetRootComponent().GetPosition();
 			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-			int health = actor.GetHealthComponent().GetHealth();
-			auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 			Vector2 Screen;
 			if (Misc->WorldToScreen(pos, &Screen))
 			{
@@ -410,11 +408,15 @@ void cCheat::readData()
 					}
 					if (Vars.ESP.Players.bWeapon)
 					{
+						auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 						if (ItemName.length() >= 4 && ItemName.length() < 32)
 							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
+						else
+							DrawString("None", ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
 					}
 					if (Vars.ESP.Players.bHealth)
 					{
+						int health = actor.GetHealthComponent().GetHealth();
 						float maxHealth = actor.GetHealthComponent().GetMaxHealth();
 						DrawHealthBar(health, maxHealth, ScreenTop.x, ScreenTop.y + 1, wi, hi);
 					}
@@ -446,6 +448,8 @@ void cCheat::readData()
 						auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 						if (ItemName.length() >= 4 && ItemName.length() < 32)
 							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
+						else
+							DrawString("None", ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
 					}
 				}
 			}
@@ -475,6 +479,8 @@ void cCheat::readData()
 						auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 						if (ItemName.length() >= 4 && ItemName.length() < 32)
 							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
+						else
+							DrawString("None", ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS");
 					}
 				}
 			}
@@ -784,6 +790,20 @@ void cCheat::readData()
 				DrawString(std::string("Megalodon " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
 			}
 			gather_aim_points(pos, &aim_points);
+		}
+		//DEBUG
+		else if (name.find("") != std::string::npos)
+		{
+			if (!Vars.ESP.bDebug)
+				continue;
+			auto pos = actor.GetRootComponent().GetPosition();
+			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+			Color color = { 255,255,255 };
+			Vector2 Screen;
+			if (Misc->WorldToScreen(pos, &Screen))
+			{
+				DrawString(std::string(name + " " + std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y, color, true, "RobotoS");
+			}
 		}
 		/*
 		* TODO
