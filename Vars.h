@@ -1,6 +1,7 @@
 #pragma once
 class vars {
 public:
+	bool bDebug;
 	bool GUI = true;
 	struct ESP
 	{
