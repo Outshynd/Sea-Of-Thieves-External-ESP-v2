@@ -163,7 +163,8 @@ UCrewOwnershipComponent AShip::GetCrewOwnershipComponent()
 uintptr_t AShip::GetOwningActor()
 {
 	//return *(uintptr_t*)(__pad0x0 + 0x410);
-	return *(uintptr_t*)(__pad0x0 + 0x468); //2.0.17.2
+	//return *(uintptr_t*)(__pad0x0 + 0x468); //2.0.17.2
+	return *(uintptr_t*)(__pad0x0 + 0x3E0);
 }
 
 TArray<struct FXMarksTheSpotMapMark> AXMarksTheSpotMap::GetMarks()
@@ -253,6 +254,11 @@ FGuid FWorldMapShipLocation::GetCrewId()
 UObject FWorldMapShipLocation::GetUObject()
 {
 	return Mem->Read<UObject>(this->m_pUObject);
+}
+
+Vector2 FWorldMapShipLocation::GetLocation()
+{
+	return this->m_Location;
 }
 
 std::wstring AFauna::GetName()

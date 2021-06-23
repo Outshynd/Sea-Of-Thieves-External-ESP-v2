@@ -140,27 +140,65 @@ private:
 //	EBootyTypes__EBootyTypes_MAX = 23
 //};
 
+// Enum Athena.EBootyTypes
+//enum EBootyTypes
+//{
+//	EBootyTypes__Invalid = 0,
+//	EBootyTypes__TreasureChest = 1,
+//	EBootyTypes__BountySkull = 2,
+//	EBootyTypes__MerchantCrate = 3,
+//	EBootyTypes__GunpowderBarrel = 4,
+//	EBootyTypes__TreasureArtifact = 5,
+//	EBootyTypes__AncientChest = 6,
+//	EBootyTypes__PirateLordBooty = 7,
+//	EBootyTypes__BoxOfSecrets = 8,
+//	EBootyTypes__CargoRunCrate = 9,
+//	EBootyTypes__MermaidGem = 10,
+//	EBootyTypes__CollectorsChest = 11,
+//	EBootyTypes__DroppedPouch = 12,
+//	EBootyTypes__FishedItem = 13,
+//	EBootyTypes__Food = 14,
+//	EBootyTypes__TaleArtifact = 15,
+//	EBootyTypes__CampaignBooty = 16,
+//	EBootyTypes__ReapersBooty = 17,
+//	EBootyTypes__ReapersBounty = 18,
+//	EBootyTypes__RitualSkull = 19,
+//	EBootyTypes__AshenBooty = 20,
+//	EBootyTypes__AshenGift = 21,
+//	EBootyTypes__EmissaryFlotsam = 22,
+//	EBootyTypes__GoldMound = 23,
+//	EBootyTypes__EBootyTypes_MAX = 24
+//};
+
 enum EBootyTypes
 {
 	EBootyTypes__Invalid = 0,
-	EBootyTypes__BountySkull = 1,
-	EBootyTypes__MerchantCrate = 2,
-	EBootyTypes__GunpowderBarrel = 3,
-	EBootyTypes__AncientChest = 4,
-	EBootyTypes__PirateLordBooty = 5,
-	EBootyTypes__BoxOfSecrets = 6,
-	EBootyTypes__MermaidGem = 7,
-	EBootyTypes__CollectorsChest = 8,
-	EBootyTypes__DroppedPouch = 9,
-	EBootyTypes__Food = 10,
-	EBootyTypes__TaleArtifact = 11,
-	EBootyTypes__CampaignBooty = 12,
-	EBootyTypes__ReapersBounty = 13,
-	EBootyTypes__RitualSkull = 14,
-	EBootyTypes__AshenBooty = 15,
-	EBootyTypes__EmissaryFlotsam = 16,
-	EBootyTypes__GoldMound = 17,
-	EBootyTypes__EBootyTypes_MAX = 18
+	EBootyTypes__TreasureChest = 1,
+	EBootyTypes__BountySkull = 2,
+	EBootyTypes__MerchantCrate = 3,
+	EBootyTypes__GunpowderBarrel = 4,
+	EBootyTypes__TreasureArtifact = 5,
+	EBootyTypes__AncientChest = 6,
+	EBootyTypes__PirateLordBooty = 7,
+	EBootyTypes__BoxOfSecrets = 8,
+	EBootyTypes__CargoRunCrate = 9,
+	EBootyTypes__MermaidGem = 10,
+	EBootyTypes__CollectorsChest = 11,
+	EBootyTypes__DroppedPouch = 12,
+	EBootyTypes__FishedItem = 13,
+	EBootyTypes__Food = 14,
+	EBootyTypes__TaleArtifact = 15,
+	EBootyTypes__CampaignBooty = 16,
+	EBootyTypes__ReapersBooty = 17,
+	EBootyTypes__ReapersBounty = 18,
+	EBootyTypes__RitualSkull = 19,
+	EBootyTypes__AshenBooty = 20,
+	EBootyTypes__AshenGift = 21,
+	EBootyTypes__EmissaryFlotsam = 22,
+	EBootyTypes__GoldMound = 23,
+	EBootyTypes__MerchantManifest = 24,
+	EBootyTypes__EBootyTypes_MAX = 25,
+
 };
 
 
@@ -371,8 +409,8 @@ private:
 	TArray<class APlayerState*> Players;
 	char __pad0x30[0x30];
 	int maxPlayersOnShip;
-	char __pad0x64[0x1C];
-};// 0x0080
+	char __pad0x64[0x2C];
+};// 0x0090
 
 class ACrewService
 {
@@ -425,7 +463,10 @@ public:
 	float	GetCameraFOV();
 private:
 	//char __pad0x0[0x490];
-	char __pad0x0[0x4E0]; //2.0.17.2
+	//char __pad0x0[0x4E0]; //2.0.17.2
+	//char __pad0x0[0x4B0]; //2.1.1??
+
+	char __pad0x0[0x450]; //2.2.0
 	Vector3 position;
 	Vector3 rotation;
 	char __pad0x10[0x10];
@@ -529,10 +570,12 @@ class FWorldMapShipLocation
 public:
 	FGuid GetCrewId();
 	UObject GetUObject();
+	Vector2 GetLocation();
 private:
 	FGuid crewId;
-	char __pad0x10[0x18];
+	//char __pad0x10[0x18];
 	uintptr_t m_pUObject;
+	Vector2 m_Location;
 };
 
 

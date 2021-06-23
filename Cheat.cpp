@@ -1,15 +1,18 @@
 ﻿#include "Cheat.h"
 #include "Menu.h"
-//#include "Process.h"
 #include <fstream>
 #include <ctime>
+#include <cmath>
 
 cCheat* Cheat = new cCheat();
 
 bool __debug = false;
+
+
 clock_t elapsed = 0;
 clock_t lastTime = clock();
 Vector2 last_xy = Vector2(0.0f, 0.0f);
+float lastDistance = 0.0f;
 
 std::string cCheat::getNameFromIDmem(int ID) {
 	try {
@@ -38,6 +41,10 @@ double _clockToMilliseconds(clock_t ticks) {
 	return (ticks / (double)CLOCKS_PER_SEC) * 1000.0;
 }
 
+double _elapsedTime(clock_t start, clock_t end)
+{
+	return (end - start);
+}
 
 Vector2 RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle, bool angleInRadians = false)
 {
@@ -45,8 +52,7 @@ Vector2 RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle, boo
 		angle = static_cast<float>(angle * (PI / 180.f));
 	float cosTheta = static_cast<float>(cos(angle));
 	float sinTheta = static_cast<float>(sin(angle));
-	Vector2 returnVec = Vector2(cosTheta * (pointToRotate.x - centerPoint.x) - sinTheta * (pointToRotate.y - centerPoint.y), sinTheta * (pointToRotate.x - centerPoint.x) + cosTheta * (pointToRotate.y - centerPoint.y)
-	);
+	Vector2 returnVec = Vector2(cosTheta * (pointToRotate.x - centerPoint.x) - sinTheta * (pointToRotate.y - centerPoint.y), sinTheta * (pointToRotate.x - centerPoint.x) + cosTheta * (pointToRotate.y - centerPoint.y));
 	returnVec += centerPoint;
 	return returnVec;
 }
@@ -61,7 +67,7 @@ void cCheat::readData()
 
 	uintptr_t address = 0;
 
-	if (!UWorld) //baseModule+0x63E368 - 2.0.14
+	if (!UWorld)
 	{
 		address = Mem->FindSignature(baseModule, baseSize,
 			(BYTE*)("\x48\x8B\x05\x00\x00\x00\x00\x48\x8B\x88\x00\x00\x00\x00\x48\x85\xC9\x74\x06\x48\x8B\x49\x70"),
@@ -70,13 +76,13 @@ void cCheat::readData()
 		auto uworldoffset = Mem->Read<int32_t>(address + 3);
 		UWorld = address + uworldoffset + 7;
 	}
-	if (!GNames) //baseModule+0x1389238 - 2.0.14
+	if (!GNames)
 	{
 		address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x48\x8B\x1D\x00\x00\x00\x00\x48\x85\x00\x75\x3A", (char*)"xxx????xx?xx");
 		auto gnamesoffset = Mem->Read<int32_t>(address + 3);
 		GNames = Mem->Read<uintptr_t>(address + gnamesoffset + 7);
 	}
-	if (!GObjects) //baseModule+0x1410990‬ - 2.0.14
+	if (!GObjects)
 	{
 		address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x48\x8B\x15\x00\x00\x00\x00\x3B\x42\x1C", (char*)"xxx????xxx");
 		auto gobjectsoffset = Mem->Read<int32_t>(address + 3);
@@ -86,8 +92,6 @@ void cCheat::readData()
 
 	if (Names.empty())
 	{
-		//std::ofstream myfile;
-		//myfile.open("Gnames.txt");
 
 		for (int i = 0; i < 206000; i++)
 		{
@@ -149,16 +153,40 @@ void cCheat::readData()
 	DrawString(dir, compass_pos.x, compass_pos.y, Color{ 255, 255, 255 }, true, "RobotoL");
 
 
-	//spedometer
+	//speedometer
 	Vector2 my_xy = Vector2(SOT->localPlayer.position.x, SOT->localPlayer.position.y);
-	//DrawString(std::string(std::to_string(my_xy.x) + ", " + std::to_string(my_xy.y)).c_str(), 1000, 1000, Color{ 255, 255, 255 }, true, "RobotoS_Bold");
+	
 	if (last_xy.x == 0.0f && last_xy.y == 0.0f)
 		last_xy = my_xy;
 
-	if (my_xy.DistTo(last_xy) > 0.5f)
+	
+	auto _now = clock();
+
+	if (_elapsedTime(lastTime, _now) > 0.5 * CLOCKS_PER_SEC)
 	{
+		auto xDelta = std::abs(my_xy.x - last_xy.x);
+		auto yDelta = std::abs(my_xy.y - last_xy.y);
+		auto dist = std::sqrt(xDelta + yDelta);
+
+		elapsed = _elapsedTime(lastTime, _now);
+		lastTime = _now;
+
+		lastDistance = dist;
+
 		last_xy = my_xy;
-		
+	}
+
+	if (lastDistance > 0)
+	{
+		char speedbuf[20] = { 0 };
+
+		auto speed = (float)(lastDistance * elapsed);
+		speed = speed / CLOCKS_PER_SEC;
+		auto mph = speed * 2.237f;
+
+		sprintf_s(speedbuf, sizeof(speedbuf), "%.1f mph", mph);
+
+		DrawString(speedbuf, compass_pos.x, compass_pos.y + (Menu->largeFont == false ? 40 : 60), Color{ 255,255,255 }, true, "RobotoS_Bold");
 	}
 
 
@@ -178,6 +206,9 @@ void cCheat::readData()
 
 		auto id = actor.GetID();
 		auto name = getNameFromIDmem(id);
+
+		if (name.find("BP_Audio") != std::string::npos)
+			continue;
 
 		if (name.find("BP_Skeleton") != std::string::npos && name.find("Pawn") != std::string::npos)
 		{
@@ -208,7 +239,7 @@ void cCheat::readData()
 					{
 						auto ItemName = actor.GetWieldedItemComponent().GetWieldedItem().GetItemInfo().GetItemDesc().GetName();
 
-						if (ItemName.length() >= 4 && ItemName.length() < 32)
+						if (ItemName.length() >= 5 && ItemName.length() < 32)
 							DrawString(ItemName.c_str(), ScreenTop.x, ScreenTop.y + hi, Color{ 255,255,255 }, true, "RobotoS_Bold");
 					}
 
@@ -358,6 +389,27 @@ void cCheat::readData()
 				DrawString("Fort of the Damned", Screen.x, Screen.y, color, true, "RobotoM");
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
+
+		}
+
+		//BP_SkellyFort_RitualSkullCloud
+		else if (name.find("BP_LegendSkellyFort") != std::string::npos)
+		{
+		if (!Vars.ESP.World.bFort)
+			continue;
+
+		auto pos = actor.GetRootComponent().GetPosition();
+		auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
+
+		Color color = { Vars.ESP.World.colorWorld[0],Vars.ESP.World.colorWorld[1],Vars.ESP.World.colorWorld[2],Vars.ESP.World.colorWorld[3] };
+
+
+		Vector2 Screen;
+		if (Misc->WorldToScreen(pos, &Screen))
+		{
+			DrawString("Legendary Skull Fort", Screen.x, Screen.y, color, true, "RobotoM");
+			DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
+		}
 
 		}
 
@@ -631,6 +683,9 @@ void cCheat::readData()
 
 			if (name.find("NetProxy") != std::string::npos)
 			{
+				if (distance <= 1700)
+					continue;
+
 				if (Ship.GetOwningActor())
 					continue;
 
@@ -665,8 +720,13 @@ void cCheat::readData()
 			auto Ship = *reinterpret_cast<AShip*>(&actors[i]);
 
 			if (name.find("NetProxy") != std::string::npos)
+			{
+				if (distance <= 1700)
+					continue;
+
 				if (Ship.GetOwningActor())
 					continue;
+			}
 
 
 			Color color = { Vars.ESP.Ships.colorEnemy[0],Vars.ESP.Ships.colorEnemy[1],Vars.ESP.Ships.colorEnemy[2],Vars.ESP.Ships.colorEnemy[3] };
@@ -700,8 +760,13 @@ void cCheat::readData()
 			auto Ship = *reinterpret_cast<AShip*>(&actors[i]);
 
 			if (name.find("NetProxy") != std::string::npos)
+			{
+				if (distance <= 1700)
+					continue;
+
 				if (Ship.GetOwningActor())
 					continue;
+			}
 
 			Color color = { Vars.ESP.Ships.colorEnemy[0],Vars.ESP.Ships.colorEnemy[1],Vars.ESP.Ships.colorEnemy[2],Vars.ESP.Ships.colorEnemy[3] };
 
@@ -1115,41 +1180,6 @@ void cCheat::readData()
 				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
 			}
 		}
-
-		/*else if (name.find("AmmoChest") != std::string::npos)
-		{
-			auto pos = actor.GetRootComponent().GetPosition();
-			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-
-			Color color = Color{ Vars.ESP.colorOther[0], Vars.ESP.colorOther[1], Vars.ESP.colorOther[2], Vars.ESP.colorOther[3] };
-
-			Vector2 Screen;
-			if (Misc->WorldToScreen(pos, &Screen))
-			{
-				//DrawString(std::wstring(L"Ammo Crate [ " + std::to_wstring((int)distance) + L"m ] ").c_str(), Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString("Ammo Crate", Screen.x, Screen.y, color, true, "RobotoM");
-				DrawString(std::string(std::to_string((int)distance) + "m").c_str(), Screen.x, Screen.y + (Menu->largeFont == false ? 18 : 36), color, true, "RobotoS");
-			}
-		}*/
-
-		/*else if (name.find("Ammo") != std::string::npos)
-		{
-			if (!Vars.ESP.Treasure.bActive)
-				continue;
-
-			auto pos = actor.GetRootComponent().GetPosition();
-			auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
-
-			auto treasure = *reinterpret_cast<AItemProxy*>(&actors[i]);
-
-			Color color = Color{ Vars.ESP.colorOther[0], Vars.ESP.colorOther[1], Vars.ESP.colorOther[2], Vars.ESP.colorOther[3] };
-
-			Vector2 Screen;
-			if (Misc->WorldToScreen(pos, &Screen))
-				DrawString(std::wstring(treasure.GetBootyItemInfo().GetItemDesc().GetName() + L" [ " + std::to_wstring((int)distance) + L"m ] ").c_str(), Screen.x, Screen.y, color, true, "RobotoM");
-		}*/
-
-
 	}
 
 }
